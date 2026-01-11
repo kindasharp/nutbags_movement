@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Nutbag™ - Travel Snacking, Reconsidered</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #1d1d1f;
+            background: #fbfbfd;
+        }
+        
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 22px;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 120px 0 100px;
+        }
+        
+        .logo {
+            font-size: 56px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+            color: #1d1d1f;
+        }
+        
+        .tagline {
+            font-size: 28px;
+            font-weight: 400;
+            color: #6e6e73;
+            margin-bottom: 16px;
+        }
+        
+        .subtitle {
+            font-size: 17px;
+            line-height: 1.5;
+            color: #86868b;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        h2 {
+            font-size: 40px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 24px;
+        }
+        
+        h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            margin-top: 40px;
+        }
+        
+        p {
+            font-size: 17px;
+            line-height: 1.6;
+            color: #1d1d1f;
+            margin-bottom: 16px;
+        }
+        
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-top: 60px;
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 18px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            margin: 60px 0;
+        }
+        
+        .chart-title {
+            font-size: 21px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 300px;
+            border-bottom: 1px solid #d2d2d7;
+            padding: 0 20px 20px;
+            position: relative;
+        }
+        
+        .bar-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            max-width: 120px;
+        }
+        
+        .bar {
+            width: 60px;
+            background: linear-gradient(180deg, #c9a961 0%, #b8954d 100%);
+            border-radius: 4px 4px 0 0;
+            transition: all 0.3s ease;
+            margin-bottom: 12px;
+        }
+        
+        .bar.low {
+            background: linear-gradient(180deg, #d2d2d7 0%, #b8b8bb 100%);
+        }
+        
+        .bar-label {
+            font-size: 13px;
+            color: #86868b;
+            text-align: center;
+            margin-top: 8px;
+            line-height: 1.3;
+        }
+        
+        .bar-value {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 8px;
+        }
+        
+        .chart-caption {
+            font-size: 12px;
+            color: #86868b;
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+        }
+        
+        .calculator {
+            background: white;
+            border-radius: 18px;
+            padding: 50px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            margin: 60px 0;
+            text-align: center;
+        }
+        
+        .calc-label {
+            font-size: 21px;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+        
+        .slider-container {
+            margin: 40px 0;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            height: 4px;
+            background: #d2d2d7;
+            border-radius: 2px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            background: #c9a961;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            background: #c9a961;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .slider-value {
+            font-size: 48px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin: 20px 0;
+        }
+        
+        .calc-results {
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 1px solid #d2d2d7;
+        }
+        
+        .calc-result-item {
+            margin: 20px 0;
+        }
+        
+        .calc-result-label {
+            font-size: 15px;
+            color: #86868b;
+            margin-bottom: 8px;
+        }
+        
+        .calc-result-value {
+            font-size: 32px;
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        
+        .calc-caption {
+            font-size: 13px;
+            color: #86868b;
+            margin-top: 30px;
+            font-style: italic;
+        }
+        
+        .testimonials {
+            margin: 60px 0;
+        }
+        
+        .testimonial {
+            border-left: 2px solid #c9a961;
+            padding-left: 24px;
+            margin: 32px 0;
+        }
+        
+        .testimonial-text {
+            font-size: 19px;
+            color: #1d1d1f;
+            margin-bottom: 8px;
+            font-style: italic;
+        }
+        
+        .testimonial-author {
+            font-size: 14px;
+            color: #86868b;
+        }
+        
+        .faq {
+            margin: 60px 0;
+        }
+        
+        .faq-item {
+            margin: 32px 0;
+        }
+        
+        .faq-question {
+            font-size: 19px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .faq-answer {
+            font-size: 17px;
+            color: #6e6e73;
+        }
+        
+        .illustration {
+            text-align: center;
+            margin: 60px 0;
+        }
+        
+        .illustration svg {
+            max-width: 200px;
+            height: auto;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 40px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        th, td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #d2d2d7;
+        }
+        
+        th {
+            background: #f5f5f7;
+            font-weight: 600;
+            font-size: 15px;
+        }
+        
+        td {
+            font-size: 17px;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .conclusion {
+            text-align: center;
+            padding: 100px 0;
+            background: linear-gradient(180deg, #fbfbfd 0%, #f5f5f7 100%);
+        }
+        
+        .conclusion-text {
+            font-size: 24px;
+            line-height: 1.5;
+            color: #1d1d1f;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+        
+        .conclusion-cta {
+            font-size: 32px;
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        
+        @media (max-width: 768px) {
+            .two-col {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .logo {
+                font-size: 40px;
+            }
+            
+            .tagline {
+                font-size: 24px;
+            }
+            
+            h2 {
+                font-size: 32px;
+            }
+            
+            .chart {
+                padding: 0 10px 20px;
+            }
+            
+            .bar {
+                width: 50px;
+            }
+            
+            .calculator {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="container">
+            <div class="logo">THE NUTBAG™</div>
+            <div class="tagline">Travel Snacking, Reconsidered.</div>
+            <p class="subtitle">A deliberately simple system for eating better, spending less, and reallocating snack dollars toward more meaningful experiences (such as cocktails).</p>
+        </div>
+    </div>
+
+    <section>
+        <div class="container">
+            <h2>Overview</h2>
+            <p>The Nutbag is a bring‑your‑own travel snack methodology.</p>
+            <p>It replaces overpriced, underperforming airport food with a prepared, portable mix of nuts and related assets, assembled in advance and carried with quiet confidence.</p>
+            <p>No subscriptions. No branding requirements. No surprises.</p>
+        </div>
+    </section>
+
+    <section style="background: white; margin: 0; padding: 80px 0;">
+        <div class="container">
+            <div class="two-col">
+                <div>
+                    <h2>The Problem</h2>
+                    <p>Modern travel environments consistently fail at snacks.</p>
+                    <ul style="list-style: none; padding: 0; margin-top: 30px;">
+                        <li style="margin: 16px 0; font-size: 17px;">• High prices</li>
+                        <li style="margin: 16px 0; font-size: 17px;">• Low nutritional return</li>
+                        <li style="margin: 16px 0; font-size: 17px;">• Limited customization</li>
+                        <li style="margin: 16px 0; font-size: 17px;">• Questionable freshness</li>
+                    </ul>
+                    <p style="margin-top: 30px;">The traveler is left with a choice: overpay or go hungry.</p>
+                    <p><strong>The Nutbag resolves this.</strong></p>
+                </div>
+                <div>
+                    <h2>The Solution</h2>
+                    <p>A Nutbag is:</p>
+                    <ul style="list-style: none; padding: 0; margin-top: 30px;">
+                        <li style="margin: 16px 0; font-size: 17px;">• Pre‑built at home</li>
+                        <li style="margin: 16px 0; font-size: 17px;">• Optimized for portability</li>
+                        <li style="margin: 16px 0; font-size: 17px;">• Tuned to personal preference</li>
+                        <li style="margin: 16px 0; font-size: 17px;">• Resistant to melting, crushing, and regret</li>
+                    </ul>
+                    <p style="margin-top: 30px;">It performs consistently across planes, cars, trains, hotels, meetings, and trailheads.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>The Economics</h2>
+            <p>Nutbags are not about frugality. They are about resource reallocation.</p>
+            
+            <h3>Cost Comparison (Per Round Trip)</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Average Spend</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Airport snacks</td>
+                            <td>$18–$25</td>
+                        </tr>
+                        <tr>
+                            <td>Gas station snacks</td>
+                            <td>$12–$18</td>
+                        </tr>
+                        <tr>
+                            <td>Nutbag (homemade)</td>
+                            <td>$3–$5</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Net Result</h3>
+            <p>Savings of $10–$20 per trip, conservatively.</p>
+            <p>These funds may be reinvested in:</p>
+            <ul style="list-style: none; padding: 0; margin-top: 20px;">
+                <li style="margin: 12px 0; font-size: 17px;">• Airport cocktails</li>
+                <li style="margin: 12px 0; font-size: 17px;">• Destination cocktails</li>
+                <li style="margin: 12px 0; font-size: 17px;">• Hotel bar cocktails</li>
+                <li style="margin: 12px 0; font-size: 17px;">• The psychological comfort of ordering a second cocktail without hesitation</li>
+            </ul>
+
+            <div class="chart-container">
+                <div class="chart-title">Snack Strategy vs. Reclaimed Cocktails (Per Round Trip)</div>
+                <div class="chart">
+                    <div class="bar-group">
+                        <div class="bar low" style="height: 20px;"></div>
+                        <div class="bar-value">0.0</div>
+                        <div class="bar-label">Airport<br>Snacks<br>($22)</div>
+                    </div>
+                    <div class="bar-group">
+                        <div class="bar low" style="height: 80px;"></div>
+                        <div class="bar-value">0.5</div>
+                        <div class="bar-label">Gas Station<br>Snacks<br>($15)</div>
+                    </div>
+                    <div class="bar-group">
+                        <div class="bar" style="height: 210px;"></div>
+                        <div class="bar-value">1.3</div>
+                        <div class="bar-label">Nutbag<br>($4)</div>
+                    </div>
+                </div>
+                <div class="chart-caption">*Assumes $14 per cocktail. Estimates intentionally conservative.</div>
+            </div>
+
+            <p style="margin-top: 40px;"><strong>Interpretation:</strong> Lower snack spend increases discretionary beverage capacity. The Nutbag consistently outperforms alternatives.</p>
+        </div>
+    </section>
+
+    <section style="background: white; margin: 0; padding: 80px 0;">
+        <div class="container">
+            <div class="calculator">
+                <div class="calc-label">How many trips do you take per year?</div>
+                <div class="slider-container">
+                    <input type="range" id="tripSlider" min="1" max="20" value="6" />
+                    <div class="slider-value"><span id="tripCount">6</span> trips</div>
+                </div>
+                <div class="calc-results">
+                    <div class="calc-result-item">
+                        <div class="calc-result-label">Annual snack savings</div>
+                        <div class="calc-result-value">$<span id="savings">90</span>–$<span id="savingsHigh">120</span></div>
+                    </div>
+                    <div class="calc-result-item">
+                        <div class="calc-result-label">Equivalent cocktails unlocked</div>
+                        <div class="calc-result-value"><span id="cocktails">6</span>–<span id="cocktailsHigh">9</span></div>
+                    </div>
+                </div>
+                <div class="calc-caption">These cocktails were already yours. The Nutbag simply reveals them.</div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="illustration">
+                <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M60 80 Q50 60, 60 50 L140 50 Q150 60, 140 80 Z" stroke="#1d1d1f" stroke-width="2" fill="none"/>
+                    <path d="M60 80 L60 140 Q60 160, 80 160 L120 160 Q140 160, 140 140 L140 80" stroke="#1d1d1f" stroke-width="2" fill="none"/>
+                    <circle cx="85" cy="110" r="8" fill="#c9a961"/>
+                    <circle cx="110" cy="100" r="10" fill="#c9a961"/>
+                    <circle cx="115" cy="125" r="9" fill="#c9a961"/>
+                    <circle cx="90" cy="130" r="7" fill="#c9a961"/>
+                    <path d="M70 70 L75 60" stroke="#1d1d1f" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M130 70 L125 60" stroke="#1d1d1f" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </div>
+
+            <div class="testimonials">
+                <h2>Testimonials</h2>
+                <div class="testimonial">
+                    <div class="testimonial-text">"I stopped buying airport snacks. Nothing else changed. I'm happier."</div>
+                    <div class="testimonial-author">— Frequent Traveler</div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-text">"This feels obvious now, which is mildly irritating."</div>
+                    <div class="testimonial-author">— Consultant</div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-text">"I did the math. The Nutbag won."</div>
+                    <div class="testimonial-author">— Someone Who Travels</div>
+                </div>
+            </div>
+
+            <div class="faq">
+                <h2>FAQ</h2>
+                <div class="faq-item">
+                    <div class="faq-question">Is this just trail mix?</div>
+                    <div class="faq-answer">Trail mix is a category. The Nutbag is an allocation strategy.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Do I need special equipment?</div>
+                    <div class="faq-answer">No. A bag is sufficient.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Is this legal at airports?</div>
+                    <div class="faq-answer">Yes. Quietly.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="conclusion">
+        <div class="container">
+            <p class="conclusion-text">The Nutbag is not disruptive. It is corrective. It restores balance to travel snacking and reallocates wasted spend toward better outcomes.</p>
+            <p class="conclusion-text">Eat well. Spend less. Drink better.</p>
+            <div class="conclusion-cta">THE NUTBAG™</div>
+        </div>
+    </div>
+
+    <script>
+        const slider = document.getElementById('tripSlider');
+        const tripCount = document.getElementById('tripCount');
+        const savings = document.getElementById('savings');
+        const savingsHigh = document.getElementById('savingsHigh');
+        const cocktails = document.getElementById('cocktails');
+        const cocktailsHigh = document.getElementById('cocktailsHigh');
+
+        slider.addEventListener('input', function() {
+            const trips = this.value;
+            tripCount.textContent = trips;
+            
+            const savingsLow = trips * 15;
+            const savingsHighVal = trips * 20;
+            savings.textContent = savingsLow;
+            savingsHigh.textContent = savingsHighVal;
+            
+            const cocktailsLow = Math.floor(savingsLow / 14);
+            const cocktailsHighVal = Math.floor(savingsHighVal / 14);
+            cocktails.textContent = cocktailsLow;
+            cocktailsHigh.textContent = cocktailsHighVal;
+        });
+    </script>
+</body>
+</html>

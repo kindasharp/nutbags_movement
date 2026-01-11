@@ -276,6 +276,54 @@
             color: #6e6e73;
         }
         
+        .recipes {
+            background: white;
+            border-radius: 18px;
+            padding: 50px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            margin: 60px 0;
+        }
+        
+        .recipe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .recipe-card {
+            border-left: 2px solid #c9a961;
+            padding-left: 20px;
+        }
+        
+        .recipe-title {
+            font-size: 21px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .recipe-desc {
+            font-size: 15px;
+            color: #6e6e73;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .recipe-ingredients {
+            font-size: 14px;
+            color: #86868b;
+            line-height: 1.6;
+        }
+        
+        .recipe-note {
+            font-size: 13px;
+            color: #86868b;
+            font-style: italic;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #d2d2d7;
+        }
+        
         .illustration {
             text-align: center;
             margin: 60px 0;
@@ -374,7 +422,7 @@
 <body>
     <div class="hero">
         <div class="container">
-            <div class="logo">THE NUTBAG™</div>
+            <div class="logo">THE NUT BAGs™</div>
             <div class="tagline">Travel Snacking, Reconsidered.</div>
             <p class="subtitle">A deliberately simple system for eating better, spending less, and reallocating snack dollars toward more meaningful experiences (such as cocktails).</p>
         </div>
@@ -511,6 +559,66 @@
 
     <section>
         <div class="container">
+            <h2>Core Recipes</h2>
+            <p>Each formulation is calibrated for portability, shelf stability, and minimal regret at altitude.</p>
+            
+            <div class="recipes">
+                <div class="recipe-grid">
+                    <div class="recipe-card">
+                        <div class="recipe-title">The Executive</div>
+                        <div class="recipe-desc">High-performance fundamentals. No variance.</div>
+                        <div class="recipe-ingredients">
+                            • Raw almonds (40%)<br>
+                            • Cashews (30%)<br>
+                            • Walnuts (20%)<br>
+                            • Dark chocolate chips (10%)
+                        </div>
+                        <div class="recipe-note">Protein-forward. Travels well through security. Pairs with airport whiskey.</div>
+                    </div>
+                    
+                    <div class="recipe-card">
+                        <div class="recipe-title">The Long Haul</div>
+                        <div class="recipe-desc">Sustained energy. Designed for transcontinental endurance.</div>
+                        <div class="recipe-ingredients">
+                            • Roasted almonds (35%)<br>
+                            • Dried cranberries (25%)<br>
+                            • Pumpkin seeds (20%)<br>
+                            • Dried apricots, chopped (15%)<br>
+                            • Coconut flakes (5%)
+                        </div>
+                        <div class="recipe-note">Sweet-savory balance. Anti-fatigue properties unverified but plausible.</div>
+                    </div>
+                    
+                    <div class="recipe-card">
+                        <div class="recipe-title">The Minimalist</div>
+                        <div class="recipe-desc">Reduction to essentials. Maximum efficiency.</div>
+                        <div class="recipe-ingredients">
+                            • Raw cashews (60%)<br>
+                            • Sea salt (trace)
+                        </div>
+                        <div class="recipe-note">Two ingredients. Zero decisions. Pure allocation strategy.</div>
+                    </div>
+                    
+                    <div class="recipe-card">
+                        <div class="recipe-title">The Contrarian</div>
+                        <div class="recipe-desc">For those who reject consensus.</div>
+                        <div class="recipe-ingredients">
+                            • Pecans (40%)<br>
+                            • Wasabi peas (30%)<br>
+                            • Dried mango (20%)<br>
+                            • Candied ginger (10%)
+                        </div>
+                        <div class="recipe-note">Polarizing. Effective. Clears adjacent seats on planes.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <p style="margin-top: 40px; text-align: center; color: #86868b; font-size: 15px;">All recipes scale linearly. Store in resealable bags. Deploy as needed.</p>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
             <div class="illustration">
                 <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M60 80 Q50 60, 60 50 L140 50 Q150 60, 140 80 Z" stroke="#1d1d1f" stroke-width="2" fill="none"/>
@@ -562,7 +670,7 @@
         <div class="container">
             <p class="conclusion-text">The Nutbag is not disruptive. It is corrective. It restores balance to travel snacking and reallocates wasted spend toward better outcomes.</p>
             <p class="conclusion-text">Eat well. Spend less. Drink better.</p>
-            <div class="conclusion-cta">THE NUTBAG™</div>
+            <div class="conclusion-cta">THE NUT BAGs™</div>
         </div>
     </div>
 

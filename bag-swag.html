@@ -304,10 +304,11 @@
             <div class="notify-section">
                 <h2>Be the first to know</h2>
                 <p>Enter your email to be notified when Bag Swag launches. No spam. Just nuts.</p>
-                <form class="email-form" onsubmit="handleSubmit(event)">
-                    <input type="email" placeholder="your@email.com" required>
-                    <button type="submit" class="btn">Notify Me</button>
-                </form>
+                <form action="https://formspree.io/f/mojjqzjj" method="POST" class="email-form">
+    <input type="email" name="email" placeholder="your@email.com" required>
+    <input type="hidden" name="_subject" value="New Bag Swag Notification Signup">
+    <button type="submit" class="btn">Notify Me</button>
+</form>
                 <p id="confirmMessage" style="margin-top: 20px; color: #c9a961; display: none;">Thank you. You'll be notified when we launch.</p>
             </div>
         </div>

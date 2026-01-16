@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - The Nut BAGs™</title>
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="NUTBAGs™" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #1d1d1f;
+            background: #fbfbfd;
+        }
+        
+        /* Navigation Styles */
+        .main-nav {
+            background: #fbfbfd;
+            border-bottom: 1px solid #d2d2d7;
+            padding: 20px 0;
+        }
+        
+        .nav-container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1d1d1f;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: #1d1d1f;
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+        
+        .nav-links a:hover {
+            color: #c9a961;
+        }
+        
+        .nav-links a.active {
+            color: #c9a961;
+        }
+        
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            transition: opacity 0.2s;
+        }
+        
+        .hamburger:hover {
+            opacity: 0.7;
+        }
+        
+        .hamburger svg {
+            width: 28px;
+            height: 28px;
+            display: block;
+        }
+        
+        .mobile-menu {
+            display: none;
+            background: white;
+            border-bottom: 1px solid #d2d2d7;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        .mobile-menu a {
+            display: block;
+            padding: 16px 22px;
+            color: #1d1d1f;
+            text-decoration: none;
+            font-size: 17px;
+            border-bottom: 1px solid #f5f5f7;
+            transition: background 0.2s;
+        }
+        
+        .mobile-menu a:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-menu a:hover {
+            background: #f5f5f7;
+        }
+        
+        .mobile-menu a.active {
+            color: #c9a961;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+        }
+        
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 22px;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 60px 0 40px;
+            border-bottom: 1px solid #d2d2d7;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+        
+        .logo a {
+            color: #1d1d1f;
+            text-decoration: none;
+        }
+        
+        .nav {
+            font-size: 14px;
+            color: #86868b;
+        }
+        
+        .nav a {
+            color: #86868b;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .nav a:hover {
+            color: #1d1d1f;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 80px 0 60px;
+        }
+        
+        h1 {
+            font-size: 48px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+        }
+        
+        .subtitle {
+            font-size: 21px;
+            color: #6e6e73;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        h2 {
+            font-size: 40px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 24px;
+        }
+        
+        p {
+            font-size: 17px;
+            line-height: 1.6;
+            color: #1d1d1f;
+            margin-bottom: 16px;
+        }
+        
+        .founder-section {
+            background: white;
+            margin: 0;
+            padding: 80px 0;
+        }
+        
+        .founder-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            margin-top: 60px;
+        }
+        
+        .founder-card {
+            text-align: center;
+        }
+        
+        .founder-image {
+            width: 100%;
+            max-width: 400px;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            background: #f5f5f7;
+        }
+        
+        .founder-name {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .founder-title {
+            font-size: 15px;
+            color: #86868b;
+            margin-bottom: 24px;
+        }
+        
+        .founder-bio {
+            text-align: left;
+            font-size: 15px;
+            line-height: 1.6;
+            color: #1d1d1f;
+        }
+        
+        .founder-bio p {
+            font-size: 15px;
+            margin-bottom: 16px;
+        }
+        
+        .quote {
+            border-left: 2px solid #c9a961;
+            padding-left: 24px;
+            margin: 32px 0;
+            font-style: italic;
+        }
+        
+        .quote-text {
+            font-size: 19px;
+            color: #1d1d1f;
+            margin-bottom: 8px;
+        }
+        
+        .quote-author {
+            font-size: 14px;
+            color: #86868b;
+        }
+        
+        .archives-section {
+            background: #f5f5f7;
+            margin: 0;
+            padding: 80px 0;
+        }
+        
+        .archive-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+        }
+        
+        .archive-item {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        }
+        
+        .archive-image {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            background: #f5f5f7;
+            max-height: 400px;
+        }
+        
+        .archive-caption {
+            padding: 20px;
+            font-size: 14px;
+            color: #86868b;
+            text-align: center;
+        }
+        
+        .company-section {
+            padding: 80px 0;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 60px 0 40px;
+            border-top: 1px solid #d2d2d7;
+            margin-top: 80px;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+        
+        .footer-text {
+            font-size: 14px;
+            color: #86868b;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+            
+            h2 {
+                font-size: 32px;
+            }
+            
+            .founder-grid {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+            
+            .archive-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">THE NUT BAGs™</a>
+            
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html" class="active">About</a>
+                <a href="bag-swag.html">Bag Swag</a>
+            </div>
+            
+            <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+                <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M60 80 Q50 60, 60 50 L140 50 Q150 60, 140 80 Z" stroke="#1d1d1f" stroke-width="3" fill="none"/>
+                    <path d="M60 80 L60 140 Q60 160, 80 160 L120 160 Q140 160, 140 140 L140 80" stroke="#1d1d1f" stroke-width="3" fill="none"/>
+                    <circle cx="85" cy="110" r="10" fill="#c9a961"/>
+                    <circle cx="110" cy="100" r="12" fill="#c9a961"/>
+                    <circle cx="115" cy="125" r="11" fill="#c9a961"/>
+                    <circle cx="90" cy="130" r="9" fill="#c9a961"/>
+                    <path d="M70 70 L75 60" stroke="#1d1d1f" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M130 70 L125 60" stroke="#1d1d1f" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Home</a>
+        <a href="about.html" class="active">About</a>
+        <a href="bag-swag.html">Bag Swag</a>
+    </div>
+
+    <div class="hero">
+        <div class="container">
+            <h1>About</h1>
+            <p class="subtitle">Founded by Yulie and Blevyn Nutzenbågen. Trusted by travelers in over 60 countries.</p>
+        </div>
+    </div>
+
+    <section>
+        <div class="container">
+            <h2>The Company</h2>
+            <p>The Nut BAGs™ is a global leader in portable snack containment systems.</p>
+            <p>What began as a practical solution to a common travel problem has evolved into a category-defining company with a singular focus: bringing order, dignity, and intention to nuts on the move.</p>
+            <p>The company operates at scale with vertically integrated manufacturing and a research-first culture.</p>
+        </div>
+    </section>
+
+    <div class="founder-section">
+        <div class="container">
+            <h2>The Founders</h2>
+            
+            <div class="founder-grid">
+                <div class="founder-card">
+                    <img src="yulie-photo.jpg" alt="Yulie Nutzenbågen" class="founder-image">
+                    <div class="founder-name">Yulie Nutzenbågen</div>
+                    <div class="founder-title">Co-Founder & Chief Research Officer</div>
+                    <div class="founder-bio">
+                        <p>Yulie Nutzenbågen built her career at the intersection of nutritional science and behavioral research. Her work examined portion control, transport integrity, and the cognitive effects of reliable access to nuts in high-stress environments.</p>
+                        <p>Earlier in life, Yulie was a founding member of Shell Shock Doctrine. The band's single briefly charted on an independent European Top 100 list.</p>
+                        <p>She continues to oversee all research initiatives at The Nut BAGs™.</p>
+                    </div>
+                    <div class="quote">
+                        <div class="quote-text">"When you control the container, you influence the outcome. The data supports this."</div>
+                        <div class="quote-author">— Yulie Nutzenbågen</div>
+                    </div>
+                </div>
+
+                <div class="founder-card">
+                    <img src="blevyn-photo.jpg" alt="Blevyn Nutzenbågen" class="founder-image">
+                    <div class="founder-name">Blevyn Nutzenbågen</div>
+                    <div class="founder-title">Co-Founder & Chief Product Officer</div>
+                    <div class="founder-bio">
+                        <p>Blevyn Nutzenbågen is a serial entrepreneur and product inventor. Prior to The Nut BAGs™, he gained recognition for the Spherical Foam Acoustic Modulation Device™, designed to manage aggressive consonants and unpredictable breath events in live audio environments.</p>
+                        <p>He is also credited with the invention of Noise-Canceling Ice Cubes, developed to reduce disruptive clinking in premium cocktails.</p>
+                        <p>Blevyn leads product strategy with a focus on materials, ergonomics, and restraint.</p>
+                    </div>
+                    <div class="quote">
+                        <div class="quote-text">"People think these are simple objects. That's because they don't understand the problem."</div>
+                        <div class="quote-author">— Blevyn Nutzenbågen</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="archives-section">
+        <div class="container">
+            <h2>From the Archives</h2>
+            
+            <div class="archive-grid">
+                <div class="archive-item">
+                    <img src="yulie-lab.jpg" alt="Yulie Nutzenbågen in laboratory" class="archive-image">
+                    <div class="archive-caption">Yulie Nutzenbågen, research phase, 1994</div>
+                </div>
+
+                <div class="archive-item">
+                    <img src="pro-audio-tech-cover.jpg" alt="Pro Audio Tech Magazine Cover" class="archive-image">
+                    <div class="archive-caption">Pro Audio Tech, June 1992</div>
+                </div>
+
+                <div class="archive-item">
+                    <img src="shell-shock-doctrine.jpg" alt="Shell Shock Doctrine band photo" class="archive-image">
+                    <div class="archive-caption">Shell Shock Doctrine, Rotterdam</div>
+                </div>
+
+                <div class="archive-item">
+                    <img src="blevyn-ice-cubes.jpg" alt="Blevyn testing noise-canceling ice cubes" class="archive-image">
+                    <div class="archive-caption">Early prototype testing, acoustic laboratory</div>
+                </div>
+
+                <div class="archive-item">
+                    <img src="nutbags-headquarters.jpg" alt="The Nut BAGs headquarters" class="archive-image">
+                    <div class="archive-caption">Global headquarters, present day</div>
+                </div>
+
+                <div class="archive-item">
+                    <img src="founders-helicopter.jpg" alt="Founders with helicopter" class="archive-image">
+                    <div class="archive-caption">Yulie and Blevyn Nutzenbågen, 2024</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="company-section">
+        <div class="container">
+            <h2>Today</h2>
+            <p>The Nut BAGs™ is publicly trusted, privately meticulous, and quietly confident.</p>
+            <p>While the products have scaled, the philosophy has not changed.</p>
+            <p><strong>Good containers make better decisions possible.</strong></p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <div class="footer-logo">THE NUT BAGs™</div>
+            <p class="footer-text">Travel Snacking, Reconsidered.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
+        
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('mobileMenu');
+            const hamburger = document.querySelector('.hamburger');
+            
+            if (!menu.contains(event.target) && !hamburger.contains(event.target)) {
+                menu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

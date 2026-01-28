@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>According to Blevyn - The Nut BAGs™</title>
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="NUTBAGs™" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #1d1d1f;
+            background: #fbfbfd;
+        }
+        
+        /* Navigation Styles */
+        .main-nav {
+            background: #fbfbfd;
+            border-bottom: 1px solid #d2d2d7;
+            padding: 20px 0;
+        }
+        
+        .nav-container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1d1d1f;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: #1d1d1f;
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+        
+        .nav-links a:hover {
+            color: #c9a961;
+        }
+        
+        .nav-links a.active {
+            color: #c9a961;
+        }
+        
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            transition: opacity 0.2s;
+        }
+        
+        .hamburger:hover {
+            opacity: 0.7;
+        }
+        
+        .hamburger svg {
+            width: 28px;
+            height: 28px;
+            display: block;
+        }
+        
+        .mobile-menu {
+            display: none;
+            background: white;
+            border-bottom: 1px solid #d2d2d7;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        .mobile-menu a {
+            display: block;
+            padding: 16px 22px;
+            color: #1d1d1f;
+            text-decoration: none;
+            font-size: 17px;
+            border-bottom: 1px solid #f5f5f7;
+            transition: background 0.2s;
+        }
+        
+        .mobile-menu a:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-menu a:hover {
+            background: #f5f5f7;
+        }
+        
+        .mobile-menu a.active {
+            color: #c9a961;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+        }
+        
+        /* Page Styles */
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 22px;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 80px 0 40px;
+        }
+        
+        h1 {
+            font-size: 48px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+        }
+        
+        .subtitle {
+            font-size: 21px;
+            color: #6e6e73;
+            max-width: 700px;
+            margin: 0 auto 12px;
+        }
+        
+        .byline {
+            font-size: 15px;
+            color: #86868b;
+        }
+        
+        .articles-section {
+            padding: 60px 0 100px;
+        }
+        
+        .article-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        
+        .article-item {
+            padding: 40px 0;
+            border-bottom: 1px solid #d2d2d7;
+            transition: background 0.2s;
+        }
+        
+        .article-item:hover {
+            background: #f5f5f7;
+            margin: 0 -22px;
+            padding: 40px 22px;
+        }
+        
+        .article-item:last-child {
+            border-bottom: none;
+        }
+        
+        .article-date {
+            font-size: 14px;
+            color: #86868b;
+            margin-bottom: 12px;
+        }
+        
+        .article-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .article-title {
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+            color: #1d1d1f;
+            line-height: 1.2;
+        }
+        
+        .article-link:hover .article-title {
+            color: #c9a961;
+        }
+        
+        .article-excerpt {
+            font-size: 17px;
+            line-height: 1.6;
+            color: #6e6e73;
+            max-width: 700px;
+        }
+        
+        .read-more {
+            display: inline-block;
+            margin-top: 12px;
+            font-size: 15px;
+            color: #c9a961;
+            font-weight: 500;
+        }
+        
+        .article-link:hover .read-more {
+            text-decoration: underline;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 60px 0 40px;
+            border-top: 1px solid #d2d2d7;
+            margin-top: 40px;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+        
+        .footer-text {
+            font-size: 14px;
+            color: #86868b;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+            
+            .article-title {
+                font-size: 26px;
+            }
+            
+            .article-item:hover {
+                margin: 0;
+                padding: 40px 0;
+                background: transparent;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">THE NUT BAGs™</a>
+            
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="according-to-blevyn.html" class="active">According to Blevyn</a>
+                <a href="bag-swag.html">Bag Swag</a>
+            </div>
+            
+            <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+                <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M60 80 Q50 60, 60 50 L140 50 Q150 60, 140 80 Z" stroke="#1d1d1f" stroke-width="3" fill="none"/>
+                    <path d="M60 80 L60 140 Q60 160, 80 160 L120 160 Q140 160, 140 140 L140 80" stroke="#1d1d1f" stroke-width="3" fill="none"/>
+                    <circle cx="85" cy="110" r="10" fill="#c9a961"/>
+                    <circle cx="110" cy="100" r="12" fill="#c9a961"/>
+                    <circle cx="115" cy="125" r="11" fill="#c9a961"/>
+                    <circle cx="90" cy="130" r="9" fill="#c9a961"/>
+                    <path d="M70 70 L75 60" stroke="#1d1d1f" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M130 70 L125 60" stroke="#1d1d1f" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="according-to-blevyn.html" class="active">According to Blevyn</a>
+        <a href="bag-swag.html">Bag Swag</a>
+    </div>
+
+    <div class="hero">
+        <div class="container">
+            <h1>According to Blevyn</h1>
+            <p class="subtitle">Observations on systems, inefficiency, and the pursuit of rational outcomes.</p>
+            <p class="byline">By Blevyn Nutzenbågen, Co-Founder & Chief Product Officer</p>
+        </div>
+    </div>
+
+    <section class="articles-section">
+        <div class="container">
+            <div class="article-list">
+                
+                <!-- Article 1 -->
+                <article class="article-item">
+                    <div class="article-date">February 2025</div>
+                    <a href="blevyn-billionaires.html" class="article-link">
+                        <h2 class="article-title">Why a Rational Billionaire Would Never Run for Public Office</h2>
+                        <p class="article-excerpt">People often ask why more "successful" individuals—by which they usually mean wealthy ones—don't simply step in and fix American politics themselves. The assumption is that money, competence, and leadership are transferable skills, like a pilot's license or a Costco membership. They are not.</p>
+                        <span class="read-more">Read more →</span>
+                    </a>
+                </article>
+
+                <!-- Placeholder for future articles - remove these when you have real content -->
+                <article class="article-item">
+                    <div class="article-date">January 2025</div>
+                    <a href="#" class="article-link">
+                        <h2 class="article-title">On the Structural Integrity of the Resealable Closure System</h2>
+                        <p class="article-excerpt">There exists a persistent belief that all ziplock mechanisms are functionally equivalent. This belief is incorrect, demonstrably so, and I will now explain why in methodical detail.</p>
+                        <span class="read-more">Read more →</span>
+                    </a>
+                </article>
+
+                <article class="article-item">
+                    <div class="article-date">December 2024</div>
+                    <a href="#" class="article-link">
+                        <h2 class="article-title">Airport Economics: A Field Study in Predictable Failure</h2>
+                        <p class="article-excerpt">Over the course of seventeen international trips, I documented pricing anomalies, quality variances, and consumer behavior patterns at twenty-three airports across four continents. The data confirms what rational actors have always known.</p>
+                        <span class="read-more">Read more →</span>
+                    </a>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <div class="footer">
+        <div class="container">
+            <div class="footer-logo">THE NUT BAGs™</div>
+            <p class="footer-text">Travel Snacking, Reconsidered.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
+        
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('mobileMenu');
+            const hamburger = document.querySelector('.hamburger');
+            
+            if (!menu.contains(event.target) && !hamburger.contains(event.target)) {
+                menu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

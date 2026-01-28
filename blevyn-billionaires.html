@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>According to Blevyn - The Nut BAGs™</title>
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="NUTBAGs™" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #1d1d1f;
+            background: #fbfbfd;
+        }
+        
+        /* Navigation Styles */
+        .main-nav {
+            background: #fbfbfd;
+            border-bottom: 1px solid #d2d2d7;
+            padding: 20px 0;
+        }
+        
+        .nav-container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1d1d1f;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: #1d1d1f;
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+        
+        .nav-links a:hover {
+            color: #c9a961;
+        }
+        
+        .nav-links a.active {
+            color: #c9a961;
+        }
+        
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            transition: opacity 0.2s;
+        }
+        
+        .hamburger:hover {
+            opacity: 0.7;
+        }
+        
+        .hamburger svg {
+            width: 28px;
+            height: 28px;
+            display: block;
+        }
+        
+        .mobile-menu {
+            display: none;
+            background: white;
+            border-bottom: 1px solid #d2d2d7;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        .mobile-menu a {
+            display: block;
+            padding: 16px 22px;
+            color: #1d1d1f;
+            text-decoration: none;
+            font-size: 17px;
+            border-bottom: 1px solid #f5f5f7;
+            transition: background 0.2s;
+        }
+        
+        .mobile-menu a:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-menu a:hover {
+            background: #f5f5f7;
+        }
+        
+        .mobile-menu a.active {
+            color: #c9a961;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+        }
+        
+        /* Article Styles */
+        .article-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 60px 22px 100px;
+        }
+        
+        .article-header {
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid #d2d2d7;
+        }
+        
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #86868b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+        }
+        
+        .article-title {
+            font-size: 40px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+        
+        .article-meta {
+            font-size: 15px;
+            color: #86868b;
+            margin-bottom: 8px;
+        }
+        
+        .article-byline {
+            font-size: 15px;
+            color: #1d1d1f;
+        }
+        
+        .article-content {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #1d1d1f;
+        }
+        
+        .article-content h2 {
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-top: 48px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .article-content h3 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+        
+        .article-content p {
+            margin-bottom: 20px;
+        }
+        
+        .article-content em {
+            font-style: italic;
+        }
+        
+        .article-content strong {
+            font-weight: 600;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 60px 22px 40px;
+            border-top: 1px solid #d2d2d7;
+            margin-top: 80px;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+        
+        .footer-text {
+            font-size: 14px;
+            color: #86868b;
+        }
+        
+        @media (max-width: 768px) {
+            .article-title {
+                font-size: 32px;
+            }
+            
+            .article-content {
+                font-size: 17px;
+            }
+            
+            .article-content h2 {
+                font-size: 28px;
+            }
+            
+            .article-content h3 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">THE NUT BAGs™</a>
+            
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="according-to-blevyn.html" class="active">According to Blevyn</a>
+                <a href="bag-swag.html">Bag Swag</a>
+            </div>
+            
+            <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+                <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M60 80 Q50 60, 60 50 L140 50 Q150 60, 140 80 Z" stroke="#1d1d1f" stroke-width="3" fill="none"/>
+                    <path d="M60 80 L60 140 Q60 160, 80 160 L120 160 Q140 160, 140 140 L140 80" stroke="#1d1d1f" stroke-width="3" fill="none"/>
+                    <circle cx="85" cy="110" r="10" fill="#c9a961"/>
+                    <circle cx="110" cy="100" r="12" fill="#c9a961"/>
+                    <circle cx="115" cy="125" r="11" fill="#c9a961"/>
+                    <circle cx="90" cy="130" r="9" fill="#c9a961"/>
+                    <path d="M70 70 L75 60" stroke="#1d1d1f" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M130 70 L125 60" stroke="#1d1d1f" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="according-to-blevyn.html" class="active">According to Blevyn</a>
+        <a href="bag-swag.html">Bag Swag</a>
+    </div>
+
+    <!-- Article Content -->
+    <article class="article-container">
+        <header class="article-header">
+            <div class="section-title">According to Blevyn</div>
+            <h1 class="article-title">Why a Rational Billionaire Would Never Run for Public Office</h1>
+            <div class="article-meta">February 2025</div>
+            <div class="article-byline">Blevyn Nutzenbågen, Co-Founder & Chief Product Officer</div>
+        </header>
+
+        <div class="article-content">
+            <p>People often ask why more "successful" individuals—by which they usually mean wealthy ones—don't simply step in and fix American politics themselves. The assumption is that money, competence, and leadership are transferable skills, like a pilot's license or a Costco membership.</p>
+
+            <p>They are not.</p>
+
+            <p>A rational billionaire understands something that is oddly controversial to say out loud: public office is not a promotion. It is a demotion—of freedom, efficiency, privacy, and leverage. One does not run for office to gain power. One runs to exchange power for legitimacy, and legitimacy is a notoriously unstable asset.</p>
+
+            <p>From a purely rational perspective, the incentives are upside-down. The wealthy already possess influence without accountability, access without exposure, and outcomes without attribution. Public office, by contrast, offers a fixed salary, relentless scrutiny, and authority that evaporates on a timetable set by people you will never meet and should never try to please.</p>
+
+            <p>Elections themselves are frequently misunderstood by candidates who arrive late to the concept. They are not evaluations of merit, intelligence, or even sincerity. They are consent mechanisms—emotional, symbolic, and occasionally theatrical. Losing an election is not evidence of unfairness. It is evidence that consent was not granted.</p>
+
+            <p>This is why complaints about "rigged" outcomes from wealthy candidates are so revealing. A rational actor prices risk before entering a market. Democracy is explicit about its volatility. The possibility of rejection is not a flaw in the system; it is the system. To participate and then object to the result is less an accusation than a confession: the rules were never fully understood.</p>
+
+            <p>In this light, the truly puzzling figure is not the billionaire who avoids politics, but the one who enters it expecting gratitude. Money can purchase attention, access, and amplification. It cannot retroactively purchase legitimacy. That must be granted freely—or not at all.</p>
+
+            <p>A rational billionaire knows this. Which is why, as a rule, they stay comfortably out of the voting booth and well within whispering distance of the people who win.</p>
+
+            <h2>On Complaining, and Why It Changes Everything</h2>
+
+            <p>There is a particular moment when a candidacy stops being political and becomes diagnostic. It occurs not at the loss itself, but immediately after—when the losing party decides whether to accept the outcome or narrate their own mistreatment.</p>
+
+            <p>For a rational individual, public complaint is an irrational response.</p>
+
+            <p>Participation in an election constitutes prior agreement. One submits oneself to a system whose defining feature is uncertainty, administered by millions of people whose reasoning will never be fully legible. To complain afterward is to imply that the risk was either misunderstood or believed not to apply personally. Neither interpretation reflects well on the complainant.</p>
+
+            <p>More revealing still is the choice to complain publicly. Private dissatisfaction is understandable. Public grievance, however, signals a fundamental misapprehension of how legitimacy functions. Legitimacy is not negotiated. It cannot be appealed, audited, or shamed into existence. Once a candidate asks an audience to reconsider the result emotionally, they have already conceded that the process worked—just not in their favor.</p>
+
+            <p>This is the tell.</p>
+
+            <p>A rational actor understands that losing quietly preserves future leverage. Losing loudly converts a temporary defeat into a permanent signal: that consent is expected, not requested. Voters are remarkably tolerant of failure and unusually hostile to entitlement. The former suggests humility; the latter suggests a misunderstanding of the role being sought.</p>
+
+            <p>Complaints framed as concerns for "fairness" or "integrity" are especially unconvincing when issued by individuals whose primary advantage has never been procedural equality. Systems do not suddenly become suspect the moment they stop producing desired outcomes. To argue otherwise is to reveal that the system was only respected conditionally.</p>
+
+            <p>From a distance, public complaint reads less like protest and more like confusion. It suggests that the candidate believed wealth, visibility, or conviction might serve as a form of collateral—something to be redeemed if the vote went poorly. Democracy does not operate on collateral. It operates on consent, renewed or withdrawn at scale.</p>
+
+            <p>This is why seasoned power brokers rarely object on the record. They understand that legitimacy, once questioned, cannot be reclaimed by volume. Silence, by contrast, retains optionality. One may fund, influence, reposition, or wait. One may return through quieter doors.</p>
+
+            <p>The individual who complains publicly has foreclosed these options. In doing so, they reveal the underlying error: they were not seeking legitimacy at all. They were seeking affirmation—and mistook the ballot box for a customer service desk.</p>
+
+            <h3>Postscript: A Note on Grace</h3>
+
+            <p>Much is made of "grace" in defeat, often by those encountering it for the first time. This is unfortunate, as grace is not a performance reserved for cameras but a baseline expectation of anyone requesting authority over others.</p>
+
+            <p>Grace, in this context, is simply the ability to lose without insisting on explanation.</p>
+
+            <p>It requires no speeches, no lawsuits, no televised concern. It is demonstrated through absence—of grievance, of self-justification, of the need to be understood. One thanks supporters, acknowledges the outcome, and exits the stage with the same composure one claimed to possess upon entering it.</p>
+
+            <p>Those who find this difficult may wish to reconsider their original motivation. Power seeks discretion. Validation seeks witnesses. Democracy is indifferent to both, but it is especially unforgiving of the latter.</p>
+
+            <p>For this reason, graceful losers tend to remain influential, while aggrieved ones become instructive. The system remembers the difference.</p>
+
+            <p>And this, ultimately, is why rational billionaires rarely present themselves for election in the first place. The arrangement is asymmetrical, the exposure is unnecessary, and the outcome is contingent on people who cannot be audited, optimized, or persuaded with spreadsheets.</p>
+
+            <p>To enter such a system willingly is not evidence of confidence. It is evidence of need.</p>
+
+            <p>A rational billionaire, confronted with these terms, would decline the offer politely and return to the far more reliable work of shaping outcomes without asking permission.</p>
+        </div>
+    </article>
+
+    <div class="footer">
+        <div class="article-container">
+            <div class="footer-logo">THE NUT BAGs™</div>
+            <p class="footer-text">Travel Snacking, Reconsidered.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
+        
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('mobileMenu');
+            const hamburger = document.querySelector('.hamburger');
+            
+            if (!menu.contains(event.target) && !hamburger.contains(event.target)) {
+                menu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

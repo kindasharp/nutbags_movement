@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>On the Structural Integrity of the Resealable Closure System - The Nut BAGs™</title>
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="NUTBAGs™" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #1d1d1f;
+            background: #fbfbfd;
+        }
+        
+        /* Navigation Styles */
+        .main-nav {
+            background: #fbfbfd;
+            border-bottom: 1px solid #d2d2d7;
+            padding: 20px 0;
+        }
+        
+        .nav-container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1d1d1f;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: #1d1d1f;
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+        
+        .nav-links a:hover {
+            color: #c9a961;
+        }
+        
+        .nav-links a.active {
+            color: #c9a961;
+        }
+        
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            transition: opacity 0.2s;
+        }
+        
+        .hamburger:hover {
+            opacity: 0.7;
+        }
+        
+        .hamburger svg {
+            width: 28px;
+            height: 28px;
+            display: block;
+        }
+        
+        .mobile-menu {
+            display: none;
+            background: white;
+            border-bottom: 1px solid #d2d2d7;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        .mobile-menu a {
+            display: block;
+            padding: 16px 22px;
+            color: #1d1d1f;
+            text-decoration: none;
+            font-size: 17px;
+            border-bottom: 1px solid #f5f5f7;
+            transition: background 0.2s;
+        }
+        
+        .mobile-menu a:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-menu a:hover {
+            background: #f5f5f7;
+        }
+        
+        .mobile-menu a.active {
+            color: #c9a961;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+        }
+        
+        /* Article Styles */
+        .article-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 60px 22px 100px;
+        }
+        
+        .article-header {
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid #d2d2d7;
+        }
+        
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #86868b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+        }
+        
+        .article-title {
+            font-size: 40px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+        
+        .article-meta {
+            font-size: 15px;
+            color: #86868b;
+            margin-bottom: 8px;
+        }
+        
+        .article-byline {
+            font-size: 15px;
+            color: #1d1d1f;
+        }
+        
+        .article-content {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #1d1d1f;
+        }
+        
+        .article-content h2 {
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-top: 48px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .article-content h3 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+        
+        .article-content p {
+            margin-bottom: 20px;
+        }
+        
+        .article-content em {
+            font-style: italic;
+        }
+        
+        .article-content strong {
+            font-weight: 600;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 60px 22px 40px;
+            border-top: 1px solid #d2d2d7;
+            margin-top: 80px;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+        
+        .footer-text {
+            font-size: 14px;
+            color: #86868b;
+        }
+        
+        @media (max-width: 768px) {
+            .article-title {
+                font-size: 32px;
+            }
+            
+            .article-content {
+                font-size: 17px;
+            }
+            
+            .article-content h2 {
+                font-size: 28px;
+            }
+            
+            .article-content h3 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">THE NUT BAGs™</a>
+            
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="according-to-blevyn.html" class="active">According to Blevyn</a>
+                <a href="bag-swag.html">Bag Swag</a>
+            </div>
+            
+            <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+                <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M60 80 Q50 60, 60 50 L140 50 Q150 60, 140 80 Z" stroke="#1d1d1f" stroke-width="3" fill="none"/>
+                    <path d="M60 80 L60 140 Q60 160, 80 160 L120 160 Q140 160, 140 140 L140 80" stroke="#1d1d1f" stroke-width="3" fill="none"/>
+                    <circle cx="85" cy="110" r="10" fill="#c9a961"/>
+                    <circle cx="110" cy="100" r="12" fill="#c9a961"/>
+                    <circle cx="115" cy="125" r="11" fill="#c9a961"/>
+                    <circle cx="90" cy="130" r="9" fill="#c9a961"/>
+                    <path d="M70 70 L75 60" stroke="#1d1d1f" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M130 70 L125 60" stroke="#1d1d1f" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="according-to-blevyn.html" class="active">According to Blevyn</a>
+        <a href="bag-swag.html">Bag Swag</a>
+    </div>
+
+    <!-- Article Content -->
+    <article class="article-container">
+        <header class="article-header">
+            <div class="section-title">According to Blevyn</div>
+            <h1 class="article-title">On the Structural Integrity of the Resealable Closure System</h1>
+            <div class="article-meta">January 2025</div>
+            <div class="article-byline">Blevyn Nutzenbågen, Co-Founder & Chief Product Officer</div>
+        </header>
+
+        <div class="article-content">
+            <p>So here's the thing about ziplock bags.</p>
+
+            <p>They lie.</p>
+
+            <p>Not in a dramatic way. Not in a way that makes you question reality or your relationship with inanimate objects. Just... quietly. Persistently. The way a friend says "yeah, I'll be there" and then isn't.</p>
+
+            <p>And I've spent—and I'm aware of how this sounds—I've spent fourteen months trying to understand why.</p>
+
+            <h2>How This Started</h2>
+
+            <p>It began, as these things often do, with cashews in my laptop.</p>
+
+            <p>Not on my laptop. <em>In</em> my laptop. Specifically, cashew dust had infiltrated the keyboard to the point where the 'N' key required 40% more pressure than the others. This created a typing pattern that made me look either very angry or very uncertain, depending on context.</p>
+
+            <p>The bag had been sealed. I had <em>watched myself</em> seal it. I remember the moment clearly because I was in an airport bathroom—the kind with aggressive automatic faucets—and I had to seal it three times because the water kept turning on and startling me.</p>
+
+            <p>The bag betrayed me anyway.</p>
+
+            <p>And I thought: "This is a solved problem. This is not fusion energy. This is two pieces of plastic that either touch or don't touch. How is this hard?"</p>
+
+            <h2>The Rabbit Hole</h2>
+
+            <p>Fourteen months later, I have tested forty-three bags.</p>
+
+            <p>I have notes. Spreadsheets. A color-coded failure taxonomy. Yulie asked me, gently, if I was "doing okay," which is what people say when they're worried you've crossed a line but don't want to say it directly.</p>
+
+            <p>I told her I was quantifying inconsistency. She said that's what she was afraid of.</p>
+
+            <p>But here's what I learned: most ziplock bags are designed by people who have never actually <em>needed</em> a ziplock bag. They've used them, sure. But they've never been in seat 32B, three hours from landing, and realized that the almonds they packed—the good ones, the ones that cost $14—are now <em>everywhere</em>. In the seat pocket. In the cracks. Under the person in front of you, who is now looking back with an expression that can only be described as "why are there almonds?"</p>
+
+            <p>When you've been that person, you develop standards.</p>
+
+            <h2>What I Found</h2>
+
+            <p>Most bags fail around cycle 47.</p>
+
+            <p>I know this because I opened and closed each bag 200 times. Yes, 200. Yes, I counted. Yulie asked why I didn't just test them "a few times" like a "normal person," and I explained that failure is often not immediate. Failure is patient. Failure waits until you're confident, and then it strikes.</p>
+
+            <p>She said I was talking about bags like they have feelings.</p>
+
+            <p>I said bags don't <em>need</em> feelings. They have <em>failure modes</em>.</p>
+
+            <p>Anyway.</p>
+
+            <p>The bags with narrow tracks—anything under 4mm—failed catastrophically. The click sound they make? Pure theater. It's not actually <em>doing</em> anything. It's just there to make you <em>feel</em> like you've achieved closure, which is very different from <em>actual</em> closure.</p>
+
+            <p>It's the design equivalent of someone nodding while you talk but not actually listening.</p>
+
+            <h2>The Slider Situation</h2>
+
+            <p>Let's talk about sliders.</p>
+
+            <p>Sliders were introduced as an "innovation," which is marketing-speak for "we couldn't make the original thing work reliably, so we added a tool."</p>
+
+            <p>And look, I get it. Sliders are satisfying. That smooth <em>zip</em> sound. The sense of finality. You feel like you've accomplished something.</p>
+
+            <p>But here's the thing: if the slider doesn't engage <em>both</em> tracks—and most don't, consistently—you've just created a very confident failure. You've sealed one side beautifully while the other side is <em>spiritually</em> open.</p>
+
+            <p>I've watched people in airports do this. They seal their bag with the slider, shake it once—once!—and then put it away. And I want to stop them. I want to say, "Excuse me, I don't mean to alarm you, but your pecans are living on borrowed time."</p>
+
+            <p>But I don't. Because you can't just tell people their bags are failing. They have to discover it themselves. Usually around cycle 47.</p>
+
+            <h2>What Actually Works</h2>
+
+            <p>After all this, I can recommend exactly one approach: find a bag with an 8mm double-track closure, fill it with water, and invert it over your sink.</p>
+
+            <p>If it leaks, you've learned something important for the cost of tap water.</p>
+
+            <p>If it doesn't leak, congratulations. You've found one of the four bags on Earth that won't betray you.</p>
+
+            <p>Yulie asked why I don't just "refocus on Tupperware."</p>
+
+            <p>I explained that Tupperware is a different system with its own failure modes, primarily related to lid-to-container interface degradation and the fact that the lids are <em>never</em> in the same drawer as the containers.</p>
+
+            <p>She said I was "being difficult."</p>
+
+            <p>I said I was "being specific."</p>
+
+            <h2>Why This Matters (Or Doesn't)</h2>
+
+            <p>Look, I'm aware this is insane.</p>
+
+            <p>I'm aware that most people seal a bag, it works or it doesn't, and they move on with their lives. They don't create spreadsheets. They don't develop a vendetta against the entire concept of slider mechanisms.</p>
+
+            <p>But here's the thing: when you spend enough time thinking about a problem, you start to see it everywhere. You start to notice that the world is full of things that <em>almost</em> work. Things that work <em>most</em> of the time. Things that fail in small, predictable ways that we've all just... accepted.</p>
+
+            <p>And maybe that's fine. Maybe that's just how things are.</p>
+
+            <p>Or maybe—and I'm just putting this out there—maybe we could have bags that actually stay closed.</p>
+
+            <p>Is that so much to ask?</p>
+
+            <p>Apparently, yes.</p>
+        </div>
+    </article>
+
+    <div class="footer">
+        <div class="article-container">
+            <div class="footer-logo">THE NUT BAGs™</div>
+            <p class="footer-text">Travel Snacking, Reconsidered.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
+        
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('mobileMenu');
+            const hamburger = document.querySelector('.hamburger');
+            
+            if (!menu.contains(event.target) && !hamburger.contains(event.target)) {
+                menu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nut Bags Defense - Pen & Ink Edition</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #e8dcc8;
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            overflow: hidden;
+            font-family: 'Courier Prime', 'Courier New', monospace;
+            touch-action: none;
+        }
+        
+        canvas {
+            display: block;
+            cursor: none;
+            mix-blend-mode: multiply;
+            opacity: 0.95;
+        }
+        
+        #ui {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            color: #1a1a1a;
+            font-size: 18px;
+            letter-spacing: 0.05em;
+            pointer-events: none;
+            text-shadow: 0px 0px 1px rgba(26, 26, 26, 0.3);
+            filter: contrast(1.2);
+        }
+        
+        #ui > div {
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        .typewriter-char {
+            display: inline-block;
+            position: relative;
+        }
+        
+        #gameOver {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #1a1a1a;
+            font-size: 36px;
+            text-align: center;
+            display: none;
+            background: rgba(240, 235, 220, 0.95);
+            padding: 40px;
+            border: 3px solid #1a1a1a;
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.15);
+            filter: contrast(1.1);
+        }
+        
+        #gameOver button {
+            margin-top: 20px;
+            padding: 12px 40px;
+            background: rgba(250, 245, 235, 0.9);
+            color: #1a1a1a;
+            border: 2.5px solid #1a1a1a;
+            font-family: 'Courier Prime', 'Courier New', monospace;
+            font-size: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+            transition: all 0.1s;
+        }
+        
+        #gameOver button:hover {
+            background: #1a1a1a;
+            color: #f5f5dc;
+        }
+        
+        #gameOver button:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas"></canvas>
+    <div id="ui">
+        <div>SCORE: <span id="score">0000</span></div>
+        <div>BASE: <span id="health">100</span>%</div>
+        <div>FIRE: <span id="countdown">5.0</span>s</div>
+    </div>
+    <div id="gameOver">
+        <div id="finalMessage">GAME OVER</div>
+        <div style="font-size: 22px; margin-top: 15px;">SCORE: <span id="finalScore">0000</span></div>
+        <button onclick="restartGame()">RESTART</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        
+        // Load SVG jar
+        const jarSVG = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <path d="M59,80.235C52.184,66.495 52.405,56.181 59.293,49.293L59.586,49L140.414,49L140.707,49.293C147.595,56.181 147.816,66.495 141,80.235L141,140C141,146.989 139.201,152.213 135.707,155.707C132.213,159.201 126.989,161 120,161L80,161C73.011,161 67.787,159.201 64.293,155.707C60.799,152.213 59,146.989 59,140L59,80.235ZM139,81L61,81L61,140C61,146.345 62.535,151.12 65.707,154.293C68.88,157.465 73.655,159 80,159L120,159C126.345,159 131.12,157.465 134.293,154.293C137.465,151.12 139,146.345 139,140L139,81ZM60.621,79L139.379,79C145.426,66.648 145.606,57.315 139.579,51L60.421,51C54.394,57.315 54.574,66.648 60.621,79Z" style="fill:rgb(29,29,31);"/>
+    <circle cx="85" cy="110" r="8" style="fill:rgb(201,169,97);"/>
+    <circle cx="110" cy="100" r="10" style="fill:rgb(201,169,97);"/>
+    <circle cx="115" cy="125" r="9" style="fill:rgb(201,169,97);"/>
+    <circle cx="90" cy="130" r="7" style="fill:rgb(201,169,97);"/>
+    <path d="M70.894,70.447C70.648,70.941 70.046,71.141 69.553,70.894C69.059,70.648 68.859,70.046 69.106,69.553L74.106,59.553C74.352,59.059 74.954,58.859 75.447,59.106C75.941,59.352 76.141,59.954 75.894,60.447L70.894,70.447Z" style="fill:rgb(29,29,31);"/>
+    <path d="M130.894,69.553C131.141,70.046 130.941,70.648 130.447,70.894C129.954,71.141 129.352,70.941 129.106,70.447L124.106,60.447C123.859,59.954 124.059,59.352 124.553,59.106C125.046,58.859 125.648,59.059 125.894,59.553L130.894,69.553Z" style="fill:rgb(29,29,31);"/>
+</svg>`;
+
+        let jarImage = null;
+        const jarImg = new Image();
+        const blob = new Blob([jarSVG], {type: 'image/svg+xml'});
+        const url = URL.createObjectURL(blob);
+        jarImg.onload = function() {
+            jarImage = jarImg;
+        };
+        jarImg.src = url;
+        
+        // Load base sketch image
+        let baseImage = null;
+        const baseImg = new Image();
+        baseImg.onload = function() {
+            baseImage = baseImg;
+        };
+        baseImg.src = 'base.png';
+        
+        // Game state
+        let gameState = {
+            score: 0,
+            baseHealth: 100,
+            launchCountdown: 5.0,
+            aimX: canvas.width / 2,
+            aimY: canvas.height / 2,
+            invaders: [],
+            peews: [],
+            fallingBalls: [],
+            explosions: [],
+            gameOver: false
+        };
+        
+        // Base position
+        const base = {
+            x: canvas.width / 2,
+            y: canvas.height - 80,
+            size: 60
+        };
+        
+        // Explosion effect
+        class Explosion {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.frame = 0;
+                this.maxFrames = 30;
+                this.scratchLines = [];
+                
+                // Generate red scribble scratch marks
+                for (let i = 0; i < 8; i++) {
+                    this.scratchLines.push({
+                        angle: Math.random() * Math.PI * 2,
+                        length: 20 + Math.random() * 30,
+                        offset: Math.random() * 10
+                    });
+                }
+            }
+            
+            update() {
+                this.frame++;
+                return this.frame < this.maxFrames;
+            }
+            
+            draw() {
+                const progress = this.frame / this.maxFrames;
+                const alpha = progress < 0.3 ? progress / 0.3 : 1 - ((progress - 0.3) / 0.7);
+                
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                
+                // Red pen ink scribble scratch
+                if (progress < 0.4) {
+                    // Ink bleeding layer
+                    ctx.globalAlpha = alpha * 0.3;
+                    ctx.strokeStyle = 'rgba(180, 20, 20, 1)';
+                    ctx.lineWidth = 5;
+                    ctx.lineCap = 'round';
+                    
+                    this.scratchLines.forEach(line => {
+                        ctx.beginPath();
+                        const wobble = Math.sin(this.frame * 0.3 + line.offset) * 3;
+                        ctx.moveTo(0, 0);
+                        ctx.lineTo(
+                            Math.cos(line.angle) * line.length + wobble,
+                            Math.sin(line.angle) * line.length + wobble
+                        );
+                        ctx.stroke();
+                    });
+                    
+                    // Main scratch lines
+                    ctx.globalAlpha = alpha * 0.8;
+                    ctx.lineWidth = 2.5;
+                    
+                    this.scratchLines.forEach(line => {
+                        ctx.beginPath();
+                        const wobble = Math.sin(this.frame * 0.3 + line.offset) * 3;
+                        ctx.moveTo(0, 0);
+                        ctx.lineTo(
+                            Math.cos(line.angle) * line.length + wobble,
+                            Math.sin(line.angle) * line.length + wobble
+                        );
+                        ctx.stroke();
+                    });
+                }
+                
+                ctx.globalAlpha = 1.0;
+                
+                // Hand-drawn puff of smoke with pen ink
+                if (progress > 0.2) {
+                    const smokeAlpha = progress > 0.3 ? 1 - ((progress - 0.3) / 0.7) : (progress - 0.2) / 0.1;
+                    
+                    const puffSize = 30 + progress * 40;
+                    
+                    // Smoke outline with ink bleeding
+                    ctx.globalAlpha = smokeAlpha * 0.15;
+                    ctx.strokeStyle = 'rgba(60, 60, 60, 1)';
+                    ctx.lineWidth = 4;
+                    
+                    ctx.beginPath();
+                    for (let i = 0; i < 8; i++) {
+                        const angle = (i / 8) * Math.PI * 2;
+                        const radius = puffSize + Math.sin(i * 2 + this.frame * 0.2) * 8;
+                        const x = Math.cos(angle) * radius;
+                        const y = Math.sin(angle) * radius - progress * 20;
+                        
+                        if (i === 0) {
+                            ctx.moveTo(x, y);
+                        } else {
+                            ctx.lineTo(x, y);
+                        }
+                    }
+                    ctx.closePath();
+                    ctx.stroke();
+                    
+                    // Main smoke line
+                    ctx.globalAlpha = smokeAlpha * 0.6;
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                    
+                    // Light fill
+                    ctx.globalAlpha = smokeAlpha * 0.1;
+                    ctx.fillStyle = 'rgba(120, 120, 120, 1)';
+                    ctx.fill();
+                }
+                
+                ctx.restore();
+            }
+        }
+        
+        // Invader class with SVG
+        class Invader {
+            constructor() {
+                this.x = -100;
+                this.y = 80 + Math.random() * 100;
+                this.baseY = this.y; // Store base Y for bobbing
+                this.width = 80;
+                this.height = 80;
+                this.speed = 0.8 + Math.random() * 0.6; // Faster: 0.8 to 1.4
+                this.rotation = 0;
+                this.rotationSpeed = (0.01 + Math.random() * 0.006) * 1.5; // 50% faster rotation
+                this.rotationStartX = canvas.width * (0.15 + Math.random() * 0.10); // Start rotating between 15% and 25% across screen
+                this.balls = [true, true, true, true];
+                this.droppingBalls = false;
+                this.secondDrop = Math.random() > 0.5; // 50% chance of second drop
+                this.hasDroppedSecond = false;
+                this.scale = 0.4 + Math.random() * 0.2; // 50% smaller: 0.4 to 0.6 instead of 0.8 to 1.2
+                this.tint = Math.random() * 30 - 15; // Slight color variation
+                this.bobPhase = Math.random() * Math.PI * 2; // Random starting phase for bobbing
+            }
+            
+            update() {
+                this.x += this.speed;
+                
+                // Add vertical bobbing motion
+                this.bobPhase += 0.05;
+                this.y = this.baseY + Math.sin(this.bobPhase) * 15;
+                
+                if (this.x > this.rotationStartX) {
+                    this.rotation += this.rotationSpeed;
+                    
+                    // First drop at PI (upside down)
+                    if (this.rotation >= Math.PI && !this.droppingBalls) {
+                        this.droppingBalls = true;
+                        this.dropBalls();
+                    }
+                    
+                    // Second drop at 2*PI (right-side up again) if enabled
+                    if (this.secondDrop && this.rotation >= Math.PI * 2 && !this.hasDroppedSecond) {
+                        this.hasDroppedSecond = true;
+                        this.balls = [true, true, true, true]; // Refill balls
+                        this.dropBalls();
+                    }
+                }
+                
+                if (this.x > canvas.width + 100) {
+                    return false;
+                }
+                return true;
+            }
+            
+            dropBalls() {
+                if (!this.balls.some(b => b)) return;
+                
+                this.balls.forEach((hasBall, index) => {
+                    if (hasBall) {
+                        gameState.fallingBalls.push(new FallingBall(
+                            this.x + (Math.random() - 0.5) * 30,
+                            this.y + 40,
+                            2 + Math.random(),
+                            6 + Math.random() * 4
+                        ));
+                    }
+                });
+                this.balls = [false, false, false, false];
+            }
+            
+            draw() {
+                if (!jarImage) return;
+                
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                ctx.scale(this.scale, this.scale);
+                
+                // Draw with slight ink stamp effect
+                ctx.globalAlpha = 0.85 + Math.random() * 0.1;
+                ctx.drawImage(jarImage, -100, -100, 200, 200);
+                
+                ctx.restore();
+            }
+            
+            checkCollision(x, y) {
+                const dx = x - this.x;
+                const dy = y - this.y;
+                return Math.sqrt(dx * dx + dy * dy) < 50 * this.scale;
+            }
+        }
+        
+        // Peew missile with ink stroke
+        class Peew {
+            constructor(targetX, targetY) {
+                this.x = base.x;
+                this.y = base.y - 50; // Adjusted for new base height
+                this.targetX = targetX;
+                this.targetY = targetY;
+                
+                const angle = Math.atan2(targetY - this.y, targetX - this.x);
+                this.vx = Math.cos(angle) * 10;
+                this.vy = Math.sin(angle) * 10;
+                this.trail = [];
+            }
+            
+            update() {
+                this.trail.push({x: this.x, y: this.y});
+                if (this.trail.length > 15) this.trail.shift();
+                
+                this.x += this.vx;
+                this.y += this.vy;
+                
+                // Check collision with invaders
+                for (let i = gameState.invaders.length - 1; i >= 0; i--) {
+                    if (gameState.invaders[i].checkCollision(this.x, this.y)) {
+                        gameState.explosions.push(new Explosion(gameState.invaders[i].x, gameState.invaders[i].y));
+                        gameState.invaders.splice(i, 1);
+                        gameState.score += 100;
+                        return false;
+                    }
+                }
+                
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                    return false;
+                }
+                return true;
+            }
+            
+            draw() {
+                // Draw as a pen ink stroke with bleeding effect
+                ctx.strokeStyle = 'rgba(15, 20, 35, 0.85)';
+                ctx.lineWidth = 2.5;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                
+                // Draw trail with slight wobble
+                ctx.beginPath();
+                this.trail.forEach((point, index) => {
+                    const wobble = Math.sin(index * 0.5) * 0.5;
+                    if (index === 0) {
+                        ctx.moveTo(point.x + wobble, point.y);
+                    } else {
+                        ctx.lineTo(point.x + wobble, point.y);
+                    }
+                });
+                ctx.lineTo(this.x, this.y);
+                ctx.stroke();
+                
+                // Add ink bleeding effect
+                ctx.globalAlpha = 0.2;
+                ctx.lineWidth = 4;
+                ctx.stroke();
+                ctx.globalAlpha = 1.0;
+                
+                // Darker center line
+                ctx.strokeStyle = 'rgba(10, 15, 25, 0.9)';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+                
+                // Dot at front with ink blob
+                ctx.fillStyle = 'rgba(10, 15, 25, 0.9)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Ink bleeding around dot
+                ctx.globalAlpha = 0.2;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 1.0;
+            }
+        }
+        
+        // Falling ball with watercolor effect
+        class FallingBall {
+            constructor(x, y, speed, size) {
+                this.x = x;
+                this.y = y;
+                this.speed = speed;
+                this.size = size;
+                this.wobble = Math.random() * Math.PI * 2;
+            }
+            
+            update() {
+                this.y += this.speed;
+                this.speed += 0.15;
+                this.wobble += 0.1;
+                this.x += Math.sin(this.wobble) * 0.5;
+                
+                // Adjusted for new base image height
+                if (this.y >= base.y - 60) {
+                    gameState.explosions.push(new Explosion(this.x, this.y));
+                    gameState.baseHealth -= 3.125;
+                    if (gameState.baseHealth <= 0) {
+                        gameState.baseHealth = 0;
+                        // Add big explosion at base
+                        gameState.explosions.push(new Explosion(base.x, base.y - 40));
+                        gameState.gameOver = true;
+                        canvas.style.cursor = 'default';
+                    }
+                    return false;
+                }
+                
+                return this.y < canvas.height;
+            }
+            
+            draw() {
+                // Watercolor blob effect
+                const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
+                gradient.addColorStop(0, 'rgba(201, 169, 97, 0.9)');
+                gradient.addColorStop(0.7, 'rgba(201, 169, 97, 0.6)');
+                gradient.addColorStop(1, 'rgba(201, 169, 97, 0.1)');
+                
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                
+                // Irregular watercolor shape
+                for (let i = 0; i < 8; i++) {
+                    const angle = (i / 8) * Math.PI * 2;
+                    const radius = this.size * (0.8 + Math.random() * 0.4);
+                    const x = this.x + Math.cos(angle) * radius;
+                    const y = this.y + Math.sin(angle) * radius;
+                    
+                    if (i === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+                ctx.closePath();
+                ctx.fill();
+                
+                // Darker center
+                ctx.fillStyle = 'rgba(201, 169, 97, 0.7)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size * 0.5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        // Draw base using the sketch image
+        function drawBase() {
+            ctx.save();
+            
+            // Draw health line above base - extends across full width
+            if (gameState.baseHealth > 0) {
+                const healthPercent = gameState.baseHealth / 100;
+                ctx.strokeStyle = 'rgba(10, 15, 25, 0.85)';
+                ctx.lineWidth = 2.5;
+                ctx.lineCap = 'round';
+                
+                // Calculate dash pattern based on health
+                if (healthPercent > 0.75) {
+                    ctx.setLineDash([]);
+                } else if (healthPercent > 0.5) {
+                    ctx.setLineDash([20, 5]);
+                } else if (healthPercent > 0.25) {
+                    ctx.setLineDash([15, 10]);
+                } else {
+                    ctx.setLineDash([10, 15]);
+                }
+                
+                // Draw squiggly line with hand-drawn wobble
+                ctx.beginPath();
+                const lineY = base.y - 100;
+                const startX = 0;
+                const endX = canvas.width;
+                const segments = 60;
+                const segmentWidth = (endX - startX) / segments;
+                
+                for (let i = 0; i <= segments; i++) {
+                    const x = startX + i * segmentWidth;
+                    const wobbleY = Math.sin(i * 0.5) * 2 + Math.sin(i * 1.3) * 1.5;
+                    const wobbleX = Math.cos(i * 0.7) * 1;
+                    const y = lineY + wobbleY;
+                    
+                    if (i === 0) {
+                        ctx.moveTo(x + wobbleX, y);
+                    } else {
+                        ctx.lineTo(x + wobbleX, y);
+                    }
+                }
+                ctx.stroke();
+                
+                // Add subtle ink bleeding effect to shield line
+                ctx.globalAlpha = 0.15;
+                ctx.lineWidth = 4;
+                ctx.stroke();
+                ctx.globalAlpha = 1.0;
+                
+                ctx.setLineDash([]);
+            }
+            
+            // Draw base sketch image
+            if (baseImage) {
+                const imgWidth = 400;
+                const imgHeight = (baseImage.height / baseImage.width) * imgWidth;
+                const imgX = base.x - imgWidth / 2;
+                const imgY = base.y - imgHeight + 20;
+                
+                // Draw with multiply blend mode to convert blue to black on paper
+                ctx.globalCompositeOperation = 'multiply';
+                ctx.globalAlpha = 0.95;
+                ctx.drawImage(baseImage, imgX, imgY, imgWidth, imgHeight);
+                ctx.globalAlpha = 1.0;
+                ctx.globalCompositeOperation = 'source-over';
+            }
+            
+            ctx.restore();
+        }
+        
+        // Draw pencil aim cursor
+        function drawAim() {
+            ctx.save();
+            ctx.strokeStyle = 'rgba(80, 80, 80, 0.35)';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([5, 5]);
+            
+            ctx.beginPath();
+            ctx.moveTo(base.x, base.y - 50);
+            ctx.lineTo(gameState.aimX, gameState.aimY);
+            ctx.stroke();
+            
+            ctx.setLineDash([]);
+            
+            // Light pencil circle with wobble
+            ctx.strokeStyle = 'rgba(80, 80, 80, 0.45)';
+            ctx.lineWidth = 1.5;
+            
+            ctx.beginPath();
+            const segments = 24;
+            for (let i = 0; i <= segments; i++) {
+                const angle = (i / segments) * Math.PI * 2;
+                const wobble = Math.sin(i * 1.5) * 0.5;
+                const radius = 15 + wobble;
+                const x = gameState.aimX + Math.cos(angle) * radius;
+                const y = gameState.aimY + Math.sin(angle) * radius;
+                
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.closePath();
+            ctx.stroke();
+            
+            // Center dot
+            ctx.fillStyle = 'rgba(80, 80, 80, 0.5)';
+            ctx.beginPath();
+            ctx.arc(gameState.aimX, gameState.aimY, 1.5, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.restore();
+        }
+        
+        // Input handling
+        function updateAimPosition(clientX, clientY) {
+            const rect = canvas.getBoundingClientRect();
+            gameState.aimX = clientX - rect.left;
+            gameState.aimY = clientY - rect.top;
+        }
+        
+        canvas.addEventListener('mousemove', (e) => {
+            updateAimPosition(e.clientX, e.clientY);
+        });
+        
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            if (e.touches.length > 0) {
+                updateAimPosition(e.touches[0].clientX, e.touches[0].clientY);
+            }
+        });
+        
+        // Spawn invaders
+        let spawnTimer = 0;
+        function spawnInvader() {
+            gameState.invaders.push(new Invader());
+        }
+        
+        // Game loop
+        let lastTime = 0;
+        function gameLoop(timestamp) {
+            const deltaTime = (timestamp - lastTime) / 1000;
+            lastTime = timestamp;
+            
+            if (gameState.gameOver) {
+                document.getElementById('gameOver').style.display = 'block';
+                document.getElementById('finalScore').textContent = String(gameState.score).padStart(4, '0');
+                return;
+            }
+            
+            // Clear with transparency to show paper texture
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Update countdown
+            gameState.launchCountdown -= deltaTime;
+            if (gameState.launchCountdown <= 0) {
+                gameState.peews.push(new Peew(gameState.aimX, gameState.aimY));
+                gameState.launchCountdown = 5.0;
+            }
+            
+            // Spawn invaders
+            spawnTimer += deltaTime;
+            if (spawnTimer > 6) {
+                spawnInvader();
+                spawnTimer = 0;
+            }
+            
+            // Update and draw invaders
+            gameState.invaders = gameState.invaders.filter(invader => {
+                const alive = invader.update();
+                if (alive) invader.draw();
+                return alive;
+            });
+            
+            // Update and draw peews
+            gameState.peews = gameState.peews.filter(peew => {
+                const alive = peew.update();
+                if (alive) peew.draw();
+                return alive;
+            });
+            
+            // Update and draw falling balls
+            gameState.fallingBalls = gameState.fallingBalls.filter(ball => {
+                const alive = ball.update();
+                if (alive) ball.draw();
+                return alive;
+            });
+            
+            // Update and draw explosions
+            gameState.explosions = gameState.explosions.filter(explosion => {
+                const alive = explosion.update();
+                if (alive) explosion.draw();
+                return alive;
+            });
+            
+            // Draw game elements
+            drawBase();
+            drawAim();
+            
+            // Update UI
+            document.getElementById('score').textContent = String(gameState.score).padStart(4, '0');
+            document.getElementById('health').textContent = Math.max(0, gameState.baseHealth);
+            document.getElementById('countdown').textContent = gameState.launchCountdown.toFixed(1);
+            
+            requestAnimationFrame(gameLoop);
+        }
+        
+        function restartGame() {
+            gameState = {
+                score: 0,
+                baseHealth: 100,
+                launchCountdown: 5.0,
+                aimX: canvas.width / 2,
+                aimY: canvas.height / 2,
+                invaders: [],
+                peews: [],
+                fallingBalls: [],
+                explosions: [],
+                gameOver: false
+            };
+            spawnTimer = 0;
+            canvas.style.cursor = 'none';
+            document.getElementById('gameOver').style.display = 'none';
+            lastTime = performance.now();
+            requestAnimationFrame(gameLoop);
+        }
+        
+        // Start game
+        requestAnimationFrame(gameLoop);
+    </script>
+</body>
+</html>

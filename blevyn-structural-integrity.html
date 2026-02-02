@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>According to Blevyn - The Nut BAGs™</title>
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="NUTBAGs™" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #1d1d1f;
+            background: #fbfbfd;
+        }
+        
+        /* Navigation Styles */
+        .main-nav {
+            background: #fbfbfd;
+            border-bottom: 1px solid #d2d2d7;
+            padding: 20px 0;
+        }
+        
+        .nav-container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1d1d1f;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: #1d1d1f;
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+        
+        .nav-links a:hover {
+            color: #c9a961;
+        }
+        
+        .nav-links a.active {
+            color: #c9a961;
+        }
+        
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            transition: opacity 0.2s;
+        }
+        
+        .hamburger:hover {
+            opacity: 0.7;
+        }
+        
+        .hamburger svg {
+            width: 28px;
+            height: 28px;
+            display: block;
+        }
+        
+        .mobile-menu {
+            display: none;
+            background: white;
+            border-bottom: 1px solid #d2d2d7;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        .mobile-menu a {
+            display: block;
+            padding: 16px 22px;
+            color: #1d1d1f;
+            text-decoration: none;
+            font-size: 17px;
+            border-bottom: 1px solid #f5f5f7;
+            transition: background 0.2s;
+        }
+        
+        .mobile-menu a:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-menu a:hover {
+            background: #f5f5f7;
+        }
+        
+        .mobile-menu a.active {
+            color: #c9a961;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+        }
+        
+        /* Article Styles */
+        .article-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 60px 22px 100px;
+        }
+        
+        .article-header {
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid #d2d2d7;
+        }
+        
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #86868b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+        }
+        
+        .article-title {
+            font-size: 40px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+        
+        .article-meta {
+            font-size: 15px;
+            color: #86868b;
+            margin-bottom: 8px;
+        }
+        
+        .article-byline {
+            font-size: 15px;
+            color: #1d1d1f;
+        }
+        
+        .article-content {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #1d1d1f;
+        }
+        
+        .article-content h2 {
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-top: 48px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .article-content h3 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+        
+        .article-content p {
+            margin-bottom: 20px;
+        }
+        
+        .article-content em {
+            font-style: italic;
+        }
+        
+        .article-content strong {
+            font-weight: 600;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 60px 22px 40px;
+            border-top: 1px solid #d2d2d7;
+            margin-top: 80px;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+        
+        .footer-text {
+            font-size: 14px;
+            color: #86868b;
+        }
+        
+        @media (max-width: 768px) {
+            .article-title {
+                font-size: 32px;
+            }
+            
+            .article-content {
+                font-size: 17px;
+            }
+            
+            .article-content h2 {
+                font-size: 28px;
+            }
+            
+            .article-content h3 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">THE NUT BAGs™</a>
+            
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="according-to-blevyn.html" class="active">According to Blevyn</a>
+                <a href="bag-swag.html">Bag Swag</a>
+            </div>
+            
+            <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+                <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M60 80 Q50 60, 60 50 L140 50 Q150 60, 140 80 Z" stroke="#1d1d1f" stroke-width="3" fill="none"/>
+                    <path d="M60 80 L60 140 Q60 160, 80 160 L120 160 Q140 160, 140 140 L140 80" stroke="#1d1d1f" stroke-width="3" fill="none"/>
+                    <circle cx="85" cy="110" r="10" fill="#c9a961"/>
+                    <circle cx="110" cy="100" r="12" fill="#c9a961"/>
+                    <circle cx="115" cy="125" r="11" fill="#c9a961"/>
+                    <circle cx="90" cy="130" r="9" fill="#c9a961"/>
+                    <path d="M70 70 L75 60" stroke="#1d1d1f" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M130 70 L125 60" stroke="#1d1d1f" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="according-to-blevyn.html" class="active">According to Blevyn</a>
+        <a href="bag-swag.html">Bag Swag</a>
+    </div>
+
+    <!-- Article Content -->
+    <article class="article-container">
+        <header class="article-header">
+            <div class="section-title">According to Blevyn</div>
+            <h1 class="article-title">On the Structural Integrity of National Institutions (Or: Why Closing Something for Two Years Is Not a Renovation Strategy)</h1>
+            <div class="article-meta">February 2, 2026</div>
+            <div class="article-byline">Blevyn Nutzenbågen, Co-Founder & Chief Product Officer</div>
+        </header>
+
+        <div class="article-content">
+            <p>So here's the thing about renovation.</p>
+
+    <p>When you renovate something, the object continues to exist during the process. The roof gets replaced while people still live in the house. The store stays open while they redo the flooring. The website remains functional while you update the backend.</p>
+
+    <p>This is not a philosophical position. It's a definitional one.</p>
+
+    <p>When you close something for two years and fire everyone, you are not renovating. You are eliminating, with an asterisk.</p>
+
+    <h2>The Kennedy Center Situation</h2>
+
+    <p>On January 31, 2025, an executive order was issued to close the John F. Kennedy Center for the Performing Arts for a minimum of two years. The stated reason: structural renovation. The immediate result: termination of all 1,200 employees, cancellation of all performances, shutdown of all educational programs.</p>
+
+    <p>The National Symphony Orchestra? Gone. The Washington National Opera? Eliminated. The educational initiatives serving 11 million people annually? Discontinued.</p>
+
+    <p>I have spent—and I'm aware of how this sounds—considerable time thinking about the gap between stated intentions and observable outcomes. It's the same problem I encountered with ziplock bags claiming "secure closure" while failing at 40% pressure variance. The language promises one thing. The mechanism delivers another.</p>
+
+    <p>Yulie asked me, gently, if I was "getting worked up about politics."</p>
+
+    <p>I said I was getting specific about definitions.</p>
+
+    <h2>What Renovation Actually Means</h2>
+
+    <p>Renovation implies continuity with improvement. The Sistine Chapel was renovated over 14 years while remaining accessible. The Sydney Opera House underwent a decade-long renovation with performances continuing. The Royal Albert Hall renovated in sections specifically to avoid complete closure.</p>
+
+    <p>These are not cherry-picked examples. This is standard practice for cultural institutions, because the people running them understand that the institution is not the building—it's the accumulated expertise, the established programs, the ongoing relationships, the living cultural function.</p>
+
+    <p>When you fire the entire workforce and cancel all operations, you are not preserving an institution while improving its infrastructure. You are creating a gap, and hoping something recognizable emerges on the other side.</p>
+
+    <p>It won't.</p>
+
+    <h2>The Orchestra Problem</h2>
+
+    <p>The National Symphony Orchestra has been performing since 1931. That's 94 years of institutional knowledge, artistic relationships, community connections, and refined practice. You cannot pause that for two years and resume it. An orchestra is not a video file.</p>
+
+    <p>When those musicians are terminated and dispersed, they take positions elsewhere. They relocate. They build new careers. Some retire. Some leave the profession entirely. When the building reopens in 2027, you will not reassemble the same ensemble. You will audition new people and call it the same name.</p>
+
+    <p>This is replacement, not renovation.</p>
+
+    <p>The Washington National Opera, founded in 1956, faces the same dissolution. The educational programs reaching millions of students annually—gone, with no transition plan, no continuity structure, no preservation of relationships built over decades.</p>
+
+    <p>Yulie pointed out that I was "doing the thing where I get fixated on institutional continuity."</p>
+
+    <p>I said institutional continuity is the only thing that makes an institution an institution rather than a building with a familiar name.</p>
+
+    <p>She said I wasn't wrong, but I was "being intense about it."</p>
+
+    <p>I said precision is not intensity. Intensity is what happens when you eliminate 1,200 jobs in a single day.</p>
+
+    <h2>The Stated Justification</h2>
+
+    <p>The executive order cites "underutilization" and claims the Kennedy Center "primarily serves D.C.'s wealthiest residents." Let's examine this with the same rigor I apply to ziplock bag manufacturer claims.</p>
+
+    <p>The Kennedy Center hosted 2 million visitors in 2024. It provides free performances daily at the Millennium Stage. Its educational programs serve Title I schools across the nation. Its National Symphony Orchestra performs free outdoor concerts. The facility operates as a presidential memorial and public monument, accessible to anyone.</p>
+
+    <p>Does it also host expensive galas? Yes. So does every major cultural institution in every major city. That's how institutional funding works. The expensive events subsidize the free ones. This is not a secret or a scandal. It's the operational model that makes cultural access possible.</p>
+
+    <p>Claiming underutilization while ignoring 2 million annual visitors and 11 million educational program participants is not analysis. It's motivated numeracy. It's the same logic that would call a ziplock bag "underutilized" because it's not filled to maximum capacity at all times.</p>
+
+    <h2>The Renovation That Isn't</h2>
+
+    <p>Here's what actually happens when you close a performing arts institution for two years:</p>
+
+    <p>The musicians disperse permanently. The administrative expertise dissolves. The donor relationships destabilize. The educational partnerships collapse. The audience habits shift to alternative venues. The institutional memory evaporates. The cultural continuity breaks.</p>
+
+    <p>When the building reopens—<em>if</em> it reopens with its original function—you are not continuing the Kennedy Center. You are starting a new organization in an old building with a familiar name. The renovation of the physical structure, however necessary, does not preserve the institution if the institution's human infrastructure is eliminated.</p>
+
+    <p>And I thought: "This is a solved problem." Other countries maintain cultural institutions through renovation. They do it by renovating in sections, maintaining operations, preserving staff, ensuring continuity. It's not complicated. It's just intentional.</p>
+
+    <h2>The Efficiency Argument</h2>
+
+    <p>The executive order frames this as efficiency reform. I have strong opinions about efficiency claims.</p>
+
+    <p>Efficiency is not the same as elimination. Efficiency means achieving the same outcome with fewer resources. Elimination means ceasing the outcome entirely and calling it improvement.</p>
+
+    <p>If I wanted to make my Nutbag allocation strategy more "efficient," I wouldn't stop bringing nuts to the airport and claim I'd optimized the process. I'd find better nuts, better containers, better timing. The strategy continues. The improvement is real.</p>
+
+    <p>Closing the Kennedy Center doesn't make it more efficient. It makes it non-operational. These are not synonyms, despite the language attempting to present them as such.</p>
+
+    <p>Yulie suggested I was "maybe taking this personally because of the structural integrity parallels."</p>
+
+    <p>I said I was taking it seriously because the language claims one thing while the mechanism does another, and I have spent enough time documenting that exact phenomenon to recognize it instantly.</p>
+
+    <p>She said, "That's what I mean by 'personally.'"</p>
+
+    <p>She wasn't wrong.</p>
+
+    <h2>What This Actually Is</h2>
+
+    <p>This is not renovation. This is not efficiency reform. This is not addressing underutilization.</p>
+
+    <p>This is the elimination of a national cultural institution under administrative cover. The building may eventually reopen. The institution is gone now. The 1,200 terminated employees are not on pause. The canceled programs are not temporarily suspended. The dispersed musicians are not waiting to return.</p>
+
+    <p>When you destroy organizational continuity, you destroy the organization. The name persists. The function does not.</p>
+
+    <p>I am aware this sounds dire. I am aware that most people will assume something recognizable will return in 2027, because institutions feel permanent even when they're fragile, because buildings outlast the people who give them meaning, because we trust that things labeled "renovation" will result in improvement rather than replacement.</p>
+
+    <p>But here's the thing:</p>
+
+    <p>Failure is patient. Failure waits until you're confident in the permanence of institutions, and then it eliminates them while using the language of improvement.</p>
+
+    <p>The Kennedy Center was not a problem requiring this solution. It was a functioning national institution that required actual maintenance, actual investment, actual preservation of its human infrastructure alongside its physical structure.</p>
+
+    <p>That option was available. That option was not chosen.</p>
+
+    <h2>Conclusion</h2>
+
+    <p>When you close something for two years, fire everyone, cancel everything, and promise to reopen eventually, you are not renovating.</p>
+
+    <p>You are hoping no one notices the difference between an institution and a building with the same name.</p>
+
+    <p>Some of us notice.</p>
+
+    <p>Some of us have spent too much time documenting the gap between what things claim to be and what they actually do.</p>
+
+    <p>Some of us know that when you eliminate structural integrity while claiming to improve it, you don't get a better version of what existed.</p>
+
+    <p>You get a space where something used to be.</p>
+
+    <p>—Blevyn Nutzenbågen</p>
+        </div>
+    </article>
+
+    <div class="footer">
+        <div class="article-container">
+            <div class="footer-logo">THE NUT BAGs™</div>
+            <p class="footer-text">Travel Snacking, Reconsidered.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
+        
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('mobileMenu');
+            const hamburger = document.querySelector('.hamburger');
+            
+            if (!menu.contains(event.target) && !hamburger.contains(event.target)) {
+                menu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

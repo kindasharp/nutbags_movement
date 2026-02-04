@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nut Bags Defense - Pen & Ink Edition</title>
+    <title>Jar Defense - Watercolor Edition</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
         
@@ -92,19 +92,107 @@
             transform: translate(2px, 2px);
             box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
         }
+        
+        #intro {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 600px;
+            color: #1a1a1a;
+            font-size: 22px;
+            text-align: center;
+            background: rgba(240, 235, 220, 0.95);
+            padding: 40px;
+            border: 3px solid #1a1a1a;
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.15);
+            z-index: 1000;
+        }
+        
+        #introText {
+            line-height: 1.6;
+            margin-bottom: 30px;
+            text-align: left;
+            min-height: 200px;
+        }
+        
+        #startButton {
+            padding: 15px 40px;
+            background: rgba(250, 245, 235, 0.9);
+            color: #1a1a1a;
+            border: 2.5px solid #1a1a1a;
+            font-family: 'Courier Prime', 'Courier New', monospace;
+            font-size: 22px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+            transition: all 0.1s;
+        }
+        
+        #startButton:hover {
+            background: #1a1a1a;
+            color: #f5f5dc;
+        }
+        
+        #startButton:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+        }
+        
+        #shieldReplenish {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #1a1a1a;
+            font-size: 48px;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 2px 2px 0px rgba(255,255,255,0.8);
+            pointer-events: none;
+            display: none;
+            z-index: 999;
+        }
+        
+        @keyframes pulse {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            50% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
     </style>
 </head>
 <body>
     <canvas id="gameCanvas"></canvas>
-    <div id="ui">
-        <div>SCORE: <span id="score">0000</span></div>
-        <div>BASE: <span id="health">100</span>%</div>
-        <div>FIRE: <span id="countdown">5.0</span>s</div>
+    
+    <div id="intro">
+        <div id="introText"></div>
+        <button id="startButton" style="display:none;">DEFEND HUMANITY</button>
     </div>
+    
+    <div id="ui" style="display:none;">
+        <div>NUT BAGS PEEWED: <span id="score">0000</span></div>
+        <div>NUT SHIELD: <span id="health">100</span>%</div>
+        <div>PEEW FIRE: <span id="countdown">5.0</span>s</div>
+    </div>
+    
+    <div id="shieldReplenish">
+        NUT SHIELD REPLENISHED!
+    </div>
+    
     <div id="gameOver">
-        <div id="finalMessage">GAME OVER</div>
-        <div style="font-size: 22px; margin-top: 15px;">SCORE: <span id="finalScore">0000</span></div>
-        <button onclick="restartGame()">RESTART</button>
+        <div id="finalMessage">THE NUT LEAVINS HAVE OVERWHELMED US!</div>
+        <div style="font-size: 22px; margin-top: 15px;">NUT BAGS PEEWED: <span id="finalScore">0000</span></div>
+        <button onclick="restartGame()">TRY AGAIN</button>
     </div>
 
     <script>
@@ -118,6 +206,45 @@
         }
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
+        
+        // Typewriter intro effect
+        const introMessage = "ALERT!\n\nThe alien nut bags' cheap ziplock seals have FAILED!\n\nRotating nut bags are dropping their nuts all over humanity!\n\nPEEW those nut bags before they litter the earth with nut leavins!\n\nOur only hope: the Nut Shield...";
+        
+        function typeWriter(text, element, speed = 30) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    if (text.charAt(i) === '\n') {
+                        element.innerHTML += '<br>';
+                    } else {
+                        element.innerHTML += text.charAt(i);
+                    }
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    // Show start button when typing is done
+                    document.getElementById('startButton').style.display = 'inline-block';
+                }
+            }
+            type();
+        }
+        
+        // Start the intro
+        window.addEventListener('load', () => {
+            const introText = document.getElementById('introText');
+            typeWriter(introMessage, introText, 30);
+        });
+        
+        // Start button handler
+        document.getElementById('startButton').addEventListener('click', () => {
+            document.getElementById('intro').style.display = 'none';
+            document.getElementById('ui').style.display = 'block';
+            gameState.gameStarted = true;
+            lastTime = performance.now();
+            requestAnimationFrame(gameLoop);
+        });
         
         // Load SVG jar
         const jarSVG = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -160,7 +287,9 @@
             peews: [],
             fallingBalls: [],
             explosions: [],
-            gameOver: false
+            gameOver: false,
+            gameStarted: false,
+            lastMilestone: 0
         };
         
         // Base position
@@ -396,6 +525,17 @@
                         gameState.explosions.push(new Explosion(gameState.invaders[i].x, gameState.invaders[i].y));
                         gameState.invaders.splice(i, 1);
                         gameState.score += 100;
+                        
+                        // Check for shield replenishment at 1000 point milestones
+                        const currentMilestone = Math.floor(gameState.score / 1000) * 1000;
+                        if (currentMilestone > gameState.lastMilestone && currentMilestone > 0) {
+                            gameState.lastMilestone = currentMilestone;
+                            // Replenish shield
+                            gameState.baseHealth = Math.min(100, gameState.baseHealth + 37.5);
+                            // Show replenish message
+                            showShieldReplenish();
+                        }
+                        
                         return false;
                     }
                 }
@@ -659,11 +799,29 @@
             gameState.invaders.push(new Invader());
         }
         
+        // Shield replenishment animation
+        function showShieldReplenish() {
+            const msg = document.getElementById('shieldReplenish');
+            msg.style.display = 'block';
+            msg.style.animation = 'none';
+            setTimeout(() => {
+                msg.style.animation = 'pulse 1.5s ease-out';
+            }, 10);
+            setTimeout(() => {
+                msg.style.display = 'none';
+            }, 1500);
+        }
+        
         // Game loop
         let lastTime = 0;
         function gameLoop(timestamp) {
             const deltaTime = (timestamp - lastTime) / 1000;
             lastTime = timestamp;
+            
+            if (!gameState.gameStarted) {
+                requestAnimationFrame(gameLoop);
+                return;
+            }
             
             if (gameState.gameOver) {
                 document.getElementById('gameOver').style.display = 'block';
@@ -739,16 +897,19 @@
                 peews: [],
                 fallingBalls: [],
                 explosions: [],
-                gameOver: false
+                gameOver: false,
+                gameStarted: true,
+                lastMilestone: 0
             };
             spawnTimer = 0;
             canvas.style.cursor = 'none';
             document.getElementById('gameOver').style.display = 'none';
+            document.getElementById('ui').style.display = 'block';
             lastTime = performance.now();
             requestAnimationFrame(gameLoop);
         }
         
-        // Start game
+        // Game loop starts when start button is clicked
         requestAnimationFrame(gameLoop);
     </script>
 </body>

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>On the Algorithmic Elimination of the Mediocre Airport Bar - The Nut BAGs™</title>
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="NUTBAGs™" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #1d1d1f;
+            background: #fbfbfd;
+        }
+        
+        /* Navigation Styles */
+        .main-nav {
+            background: #fbfbfd;
+            border-bottom: 1px solid #d2d2d7;
+            padding: 20px 0;
+        }
+        
+        .nav-container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1d1d1f;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: #1d1d1f;
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+        
+        .nav-links a:hover {
+            color: #c9a961;
+        }
+        
+        .nav-links a.active {
+            color: #c9a961;
+        }
+        
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            transition: opacity 0.2s;
+        }
+        
+        .hamburger:hover {
+            opacity: 0.7;
+        }
+        
+        .hamburger svg {
+            width: 28px;
+            height: 28px;
+            display: block;
+        }
+        
+        .mobile-menu {
+            display: none;
+            background: white;
+            border-bottom: 1px solid #d2d2d7;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        .mobile-menu a {
+            display: block;
+            padding: 16px 22px;
+            color: #1d1d1f;
+            text-decoration: none;
+            font-size: 17px;
+            border-bottom: 1px solid #f5f5f7;
+            transition: background 0.2s;
+        }
+        
+        .mobile-menu a:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-menu a:hover {
+            background: #f5f5f7;
+        }
+        
+        .mobile-menu a.active {
+            color: #c9a961;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+        }
+        
+        /* Article Styles */
+        .article-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 60px 22px 100px;
+        }
+        
+        .article-header {
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid #d2d2d7;
+        }
+        
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #86868b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+        }
+        
+        .article-title {
+            font-size: 40px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+        
+        .article-meta {
+            font-size: 15px;
+            color: #86868b;
+            margin-bottom: 8px;
+        }
+        
+        .article-byline {
+            font-size: 15px;
+            color: #1d1d1f;
+        }
+        
+        .article-content {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #1d1d1f;
+        }
+        
+        .article-content h2 {
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-top: 48px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .article-content h3 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            margin-top: 36px;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+        
+        .article-content p {
+            margin-bottom: 20px;
+        }
+        
+        .article-content em {
+            font-style: italic;
+        }
+        
+        .article-content strong {
+            font-weight: 600;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 60px 22px 40px;
+            border-top: 1px solid #d2d2d7;
+            margin-top: 80px;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+        
+        .footer-text {
+            font-size: 14px;
+            color: #86868b;
+        }
+        
+        @media (max-width: 768px) {
+            .article-title {
+                font-size: 32px;
+            }
+            
+            .article-content {
+                font-size: 17px;
+            }
+            
+            .article-content h2 {
+                font-size: 28px;
+            }
+            
+            .article-content h3 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">THE NUT BAGs™</a>
+            
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="bag-swag.html">Bag Swag</a>
+                <a href="about.html">About</a>
+                <a href="according-to-blevyn.html" class="active">According to Blevyn</a>
+            </div>
+            
+            <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+                <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M60 80 Q50 60, 60 50 L140 50 Q150 60, 140 80 Z" stroke="#1d1d1f" stroke-width="3" fill="none"/>
+                    <path d="M60 80 L60 140 Q60 160, 80 160 L120 160 Q140 160, 140 140 L140 80" stroke="#1d1d1f" stroke-width="3" fill="none"/>
+                    <circle cx="85" cy="110" r="10" fill="#c9a961"/>
+                    <circle cx="110" cy="100" r="12" fill="#c9a961"/>
+                    <circle cx="115" cy="125" r="11" fill="#c9a961"/>
+                    <circle cx="90" cy="130" r="9" fill="#c9a961"/>
+                    <path d="M70 70 L75 60" stroke="#1d1d1f" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M130 70 L125 60" stroke="#1d1d1f" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Home</a>
+        <a href="bag-swag.html">Bag Swag</a>
+        <a href="about.html">About</a>
+        <a href="according-to-blevyn.html" class="active">According to Blevyn</a>
+    </div>
+
+    <!-- Article Content -->
+    <article class="article-container">
+        <header class="article-header">
+            <div class="section-title">According to Blevyn</div>
+            <h1 class="article-title">On the Algorithmic Elimination of the Mediocre Airport Bar</h1>
+            <div class="article-meta">February 2026</div>
+            <div class="article-byline">Blevyn Nutzenbågen, Co-Founder & Chief Product Officer</div>
+        </header>
+
+        <div class="article-content">
+            <p>So here's the thing about airport bars.</p>
+
+            <p>Finding a good one—and by "good" I mean: acceptable bourbon selection, bartender who doesn't resent your existence, stools that don't induce spinal regret within eight minutes—is one of the last remaining skills that actually matters. You learn the terminals. You develop instincts. You know that Concourse B in Denver has that spot near Gate 38 that's never crowded because it's slightly out of the way. You know to avoid anywhere with "Tapas" in the name.</p>
+
+            <p>This is knowledge. Hard-won, airport-specific knowledge.</p>
+
+            <p>Or it <em>was</em>.</p>
+
+            <p>I was in SeaTac two months ago—Gate N9, three-hour layover, standard Nutbag allocation strategy in effect—and I did what I always do: I asked my phone for airport bar recommendations nearby.</p>
+
+            <p>What came back was <em>perfect</em>.</p>
+
+            <p>Not good. Perfect.</p>
+
+            <p>Quiet spot. Proper glassware. Rye selection that included stuff I didn't even know I wanted to try. The bartender's name was Michelle and she had that rare quality of being warm without requiring conversation. The stool height was correct. The lighting was correct. Even the background music was correct—it was the Coltrane I would have chosen if given the option.</p>
+
+            <p>I sat there drinking a Sazerac that cost $19 but felt justified, and I thought: "This is a solved problem."</p>
+
+            <p>And then I thought: "Wait. How did it know?"</p>
+
+            <hr><br/>
+
+            <p>I started investigating.</p>
+
+            <p>I won't bore you with the full methodology, but over the next six trips I tested different queries, different phrasings, different contexts. I varied my location sharing. I used incognito mode. I borrowed Yulie's phone.</p>
+
+            <p>The results were consistent: The recommendations were <em>extremely</em> good. Not just statistically likely to please—architecturally designed around my specific preferences in ways I hadn't articulated.</p>
+
+            <p>It recommended bars I would like based on bars I'd <em>never told it about</em>. It inferred my distaste for sports-bar environments from the fact that I once searched for "noise canceling headphones" during March Madness. It suggested a mezcal flight in Austin because I'd read an article about oaxacan cuisine three weeks prior.</p>
+
+            <p>The recommendations weren't generic. They were <em>precisely calibrated</em>.</p>
+
+            <p>And here's what bothered me: I never discovered anything anymore.</p>
+
+            <hr><br/>
+
+            <p>When you've spent years developing a skill—even a stupid skill like "finding acceptable airport bars"—there's a satisfaction in the exercise of that skill. You scan the terminal. You evaluate the crowd density. You do a walk-by to assess the pour technique. You make a judgment call.</p>
+
+            <p>Sometimes you're wrong and you end up at a TGI Friday's derivative drinking something called a "Sky High Margarita" out of a glass the size of a fishbowl.</p>
+
+            <p>But sometimes you're right. And being right feels like <em>you were right</em>, not like an algorithm was right on your behalf.</p>
+
+            <p>The AI recommendations removed the stakes. They removed the possibility of failure, which also removed the possibility of success. Every bar became equally fine because the system had pre-selected for fineness.</p>
+
+            <p>I mentioned this to Yulie.</p>
+
+            <p>She looked up from her tablet—she was reviewing something about pepita protein retention, I think—and said, "You know that most people don't have strong opinions about airport bars, right?"</p>
+
+            <p>I said, "That's not the point."</p>
+
+            <p>She said, "You're complaining that a tool designed to predict your preferences is accurately predicting your preferences."</p>
+
+            <p>I said, "I'm complaining that it's eliminating discovery."</p>
+
+            <p>She said, very gently, "You've been going to the same four bars in rotation for six years."</p>
+
+            <p>Which—fine. Yes. But that's <em>my</em> rotation. I built that rotation through experience and failure and one truly unfortunate incident in LaGuardia involving something called a "Businessman's Breakfast Bloody Mary."</p>
+
+            <hr><br/>
+
+            <p>Here's the thing about optimization: It works. That's the problem.</p>
+
+            <p>The algorithm is correct. The bars it suggests are objectively better than the ones I would have found through random exploration. They save time. They reduce disappointment. They're engineered around my documented preferences and inferred behaviors.</p>
+
+            <p>But they also converge.</p>
+
+            <p>After three months of following AI recommendations, I realized I hadn't <em>chosen</em> anything. I'd been presented with options that were so precisely matched to my existing preferences that selection became automatic. The bars started to blur together—not because they were bad, but because they were all <em>correctly calibrated versions of the same thing</em>.</p>
+
+            <p>I wasn't discovering new preferences. I was having my existing preferences refined and reinforced and fed back to me with increasing precision.</p>
+
+            <p>Yulie calls this "algorithmic closure." I call it "the elimination of the mediocre experience that teaches you something."</p>
+
+            <hr><br/>
+
+            <p>I'm aware that complaining about tools that make things better is the province of people who romanticize inconvenience.</p>
+
+            <p>But here's what I keep thinking about:</p>
+
+            <p>If the algorithm is this good at predicting airport bars, what else is it predicting? What opinions am I reading that were selected because they align with opinions I already hold? What information am I seeing that was pre-filtered to match my existing worldview?</p>
+
+            <p>I used to think I had diverse information sources. But when I actually looked at my reading habits over the past year, I noticed something: I wasn't encountering things that challenged me anymore. I was encountering things that <em>interested</em> me, which is different.</p>
+
+            <p>The algorithm had learned what "Blevyn finds interesting" looks like, and it showed me more of that. Which meant I was increasingly reading things written by people who think like me, about topics I already care about, in formats I already prefer.</p>
+
+            <p>I wasn't in an echo chamber. I was in something more subtle: an algorithmic convergence pattern that felt like exploration but was actually refinement.</p>
+
+            <hr><br/>
+
+            <p>Yulie said, "You know you're describing yourself, right? You've been making the same Nutbag recipe for four years."</p>
+
+            <p>I said, "That's different. That's <em>my</em> decision based on empirical testing."</p>
+
+            <p>She said, "So is following the algorithm."</p>
+
+            <p>I said, "But I'm not <em>discovering</em> anything new."</p>
+
+            <p>She said, "You're discovering that you like what you like."</p>
+
+            <p>And then she went back to her pepita research and I sat there thinking about whether that was profound or whether she was just tired of this conversation.</p>
+
+            <hr><br/>
+
+            <p>Here's what I've started doing: Once every three trips, I ignore the algorithm.</p>
+
+            <p>I pick a bar at random. Or based on proximity. Or because the name is slightly stupid and I want to see if it's stupid in an interesting way.</p>
+
+            <p>Most of the time, the bar is worse than what the algorithm would have suggested. The bourbon selection is limited. The bartender is fine but distracted. The stool height is sub-optimal.</p>
+
+            <p>But occasionally—maybe one time in ten—I find something the algorithm wouldn't have shown me. A bar that's <em>technically</em> not my taste but has one specific thing that's unexpectedly great. A bartender who recommends something I wouldn't have ordered but turns out to be correct. A conversation with the person next to me that wouldn't have happened in the algorithmically optimal quiet spot.</p>
+
+            <p>Is this rational? No.</p>
+
+            <p>Does it cost me time and occasionally result in a mediocre drink? Yes.</p>
+
+            <p>But it feels like I'm making a decision, rather than confirming a prediction.</p>
+
+            <hr><br/>
+
+            <p>I told Yulie about this new system.</p>
+
+            <p>She said, "So you've created an algorithm that occasionally randomizes your decisions."</p>
+
+            <p>I said, "That's not what this is."</p>
+
+            <p>She said, "You're following a rule—'every third trip, deviate from optimization'—which is just a meta-algorithm."</p>
+
+            <p>I said, "It's about preserving agency."</p>
+
+            <p>She said, "You're describing agency as 'deliberately making suboptimal choices.'"</p>
+
+            <p>I said, "Yes. Exactly."</p>
+
+            <p>She smiled a little and went back to her work.</p>
+
+            <hr><br/>
+
+            <p>I'm aware that most people don't think about airport bars this much. I'm aware that "optimal recommendations" is a <em>good thing</em> and that complaining about tools that work is privileged and silly.</p>
+
+            <p>But I keep thinking about that SeaTac bar. The perfect one. The one where everything was exactly right.</p>
+
+            <p>I've been back to that terminal four times since then. I've never gone back to that bar.</p>
+
+            <p>Not because it wasn't good. Because it was so good it eliminated the question of whether I <em>wanted</em> to go there.</p>
+
+            <p>The algorithm knew I would like it. And it was right.</p>
+
+            <p>And somehow that made it feel like it wasn't mine anymore.</p>
+
+            <hr><br/>
+
+            <p><strong>The Nutbag is not algorithmic. It is manual. Pack accordingly.</strong></p>
+
+            <hr>
+
+            <p><em>Blevyn Nutzenbågen is Co-Founder and Chief Product Officer of The Nut BAGs™. He has spent eighteen months investigating optimal airport bar selection and remains uncertain whether this represents growth or fixation.</em></p>
+        </div>
+    </article>
+
+    <div class="footer">
+        <div class="article-container">
+            <div class="footer-logo">THE NUT BAGs™</div>
+            <p class="footer-text">Travel Snacking, Reconsidered.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
+        
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('mobileMenu');
+            const hamburger = document.querySelector('.hamburger');
+            
+            if (!menu.contains(event.target) && !hamburger.contains(event.target)) {
+                menu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

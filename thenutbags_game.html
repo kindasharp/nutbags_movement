@@ -205,7 +205,10 @@
             canvas.height = window.innerHeight;
         }
         resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('resize', () => {
+            // Reload page on resize to reset game properly
+            location.reload();
+        });
         
         // Typewriter intro effect
         const introMessage = "ALERT!\n\nThe alien nut bags' cheap ziplock seals have FAILED!\n\nRotating nut bags are dropping their nuts all over humanity!\n\nPEEW those nut bags before they litter the earth with nut leavins!\n\nOur only hope: the Nut Shield...";
@@ -237,12 +240,15 @@
             typeWriter(introMessage, introText, 30);
         });
         
+        // Game loop variable
+        let lastTime = 0;
+        
         // Start button handler
         document.getElementById('startButton').addEventListener('click', () => {
             document.getElementById('intro').style.display = 'none';
             document.getElementById('ui').style.display = 'block';
             gameState.gameStarted = true;
-            lastTime = performance.now();
+            lastTime = performance.now(); // Initialize lastTime RIGHT before starting
             requestAnimationFrame(gameLoop);
         });
         
@@ -813,15 +819,13 @@
         }
         
         // Game loop
-        let lastTime = 0;
         function gameLoop(timestamp) {
+            if (!gameState.gameStarted) {
+                return; // Don't call requestAnimationFrame until game starts
+            }
+            
             const deltaTime = (timestamp - lastTime) / 1000;
             lastTime = timestamp;
-            
-            if (!gameState.gameStarted) {
-                requestAnimationFrame(gameLoop);
-                return;
-            }
             
             if (gameState.gameOver) {
                 document.getElementById('gameOver').style.display = 'block';
@@ -909,8 +913,7 @@
             requestAnimationFrame(gameLoop);
         }
         
-        // Game loop starts when start button is clicked
-        requestAnimationFrame(gameLoop);
+        // Game loop will start when start button is clicked
     </script>
 </body>
 </html>
